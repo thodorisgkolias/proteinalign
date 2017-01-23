@@ -1,4 +1,5 @@
 exportPattern("^[^\\.]")
 importFrom(parallel, "mclapply")
 importFrom(clue,"solve_LSAP")
+importFrom(shapes,"procGPA")
 useDynLib(shapealign)
