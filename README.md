@@ -1,6 +1,6 @@
 ## shapealign
 
-### Synopsis
+### Documentation
 
 'shapealign' is a R package that performs protein alignment using statistical shape analysis techiniques.
 
