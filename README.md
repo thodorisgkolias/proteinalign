@@ -4,9 +4,6 @@
 
 'shapealign' is a R package that performs protein alignment using statistical shape analysis techiniques.
 
-### Code Example
-
-
 ### Installation
 The package can be install from the github repository using 
 ```{.r}
@@ -19,10 +16,9 @@ biocLite("Biostrings")
 biocLite("msa")
 ```
 
-### Tests
+### Code example
 
-
-
+### Authors
 
 ### License
 
