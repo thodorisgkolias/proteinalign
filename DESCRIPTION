@@ -6,6 +6,4 @@ Author: Theodoros Gkolias, Alfred Kume
 Maintainer: Theodoros Gkolias <tg235@kent.ac.uk>
 Description: More about what it does (maybe more than one line)
 Depends: R (>= 3.1.0), methods, Biostrings (>= 2.30.0)
-Imports: Rcpp (>= 0.11.1), BiocGenerics, IRanges (>= 1.20.0),
-        S4Vectors, tools
 LazyData: TRUE
