@@ -1,6 +1,15 @@
 exportPattern("^[^\\.]")
-import(Biostrings)
+
 importFrom(parallel, "mclapply")
 importFrom(clue,"solve_LSAP")
 importFrom(shapes,"procGPA")
+import(methods)
+import(Rcpp)
+import(BiocGenerics)
+import(Biostrings)
+import(S4Vectors)
+import(IRanges)
+importFrom(tools, texi2dvi)
+importFrom(utils, capture.output)
+
 useDynLib(shapealign)
