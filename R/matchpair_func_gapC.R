@@ -170,7 +170,7 @@ SPchoose = function(data1, data2, k = 4,cut = 0.2) {
           data.proc = array(NA,dim = c(dim(ali.mat)[1], 3, 2))
           data.proc[, , 1] = as.matrix(data1[ali.mat[, 1], -1])
           data.proc[, , 2] = as.matrix(data2[ali.mat[, 2], -1])
-          proc = procrustesGPA(data.proc)
+          proc = procGPA(data.proc)
           euc.dist = NULL
           for (i in 1:dim(ali.mat)[1]) {
                euc.dist[i] = dist(rbind(proc$rotated[i, , 1],
