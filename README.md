@@ -15,8 +15,11 @@ A short description of the motivation behind the creation and maintenance of the
 ## Installation
 
 If installation fails, install the packages of 'Biostrings' and 'msa' using :
+
 source("https://bioconductor.org/biocLite.R")
+
 biocLite("Biostrings")
+
 biocLite("msa")
 
 ## Tests
