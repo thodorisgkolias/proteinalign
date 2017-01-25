@@ -101,6 +101,14 @@ readdata = function(dir){
      return(out)
 }
 
+
+pam.transf = function(pam) {
+     res = round(10^(pam/10),6)
+     return(res)
+}
+
+
+
 #### Likelihood functions ####
 
 riemd = function(X, Y) {
