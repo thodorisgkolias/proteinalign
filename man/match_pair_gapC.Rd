@@ -24,10 +24,10 @@ match.pairC(data, SP = 10, n.cores = 8, volume = NULL,
 }
 
 \value{A list with components
-\item{align}{a p x m matrix with the matching of each landmark.}
-\item{M} {number of matched landmarks.}
-\item{rmsd}{ RMSD of the final alignment.}
-\item{TMScore}{ TMscore of the final alignment.}
+\item{align}{p x m matrix with the matching correspondence of each landmark.}
+\item{M}{number of matched landmarks.}
+\item{rmsd}{RMSD of the final alignment.}
+\item{TMScore}{TMscore of the final alignment.}
 \item{SO}{Structure overlap of the final alignment.}
 \item{lik}{log - likelihood of the final alignment.}
 \item{time}{Total time needed for the alignment in seconds.}
