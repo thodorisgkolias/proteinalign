@@ -103,7 +103,7 @@ readdata = function(dir){
 
 
 pam.transf = function(pam) {
-     res = round(10^(pam/10),6)
+     res = round(10^(pam/10), 6)
      return(res)
 }
 
