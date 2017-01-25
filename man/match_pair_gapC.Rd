@@ -1,5 +1,5 @@
-\name{match.pair_gapC}
-\alias{match.pair_gapC}
+\name{match_pair_gapC}
+\alias{match_pair_gapC}
 
 \title{Protein molecule matching}
 \description{
