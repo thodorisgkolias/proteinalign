@@ -34,13 +34,17 @@ match.pair_C = function(data, SP = 10, n.cores = 8, volume = NULL,
      ## IF restrict = TRUE then the search is happening only on pairs
      ## that preserve the sequence order.
 
-     if(restrict){
+     if (restrict) {
           hungarian.step = hungarian.step1
      } else {
           hungarian.step = hungarian.step
      }
      start.time = proc.time()[3]
-
+     
+     if (!is.null(PAM) {
+          PAM = lapply(PAM, pam.transf)
+     }
+         
      DATA = list()
      DATA[[1]] = as.matrix(data[[1]][, -1])
      DATA[[2]] = as.matrix(data[[2]][, -1])
