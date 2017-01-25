@@ -41,7 +41,7 @@ match.pair_C = function(data, SP = 10, n.cores = 8, volume = NULL,
      }
      start.time = proc.time()[3]
      
-     if (!is.null(PAM) {
+     if (!is.null(PAM)) {
           PAM = lapply(PAM, pam.transf)
      }
          
