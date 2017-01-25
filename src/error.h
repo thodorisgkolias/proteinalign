@@ -269,7 +269,7 @@ gsl_stream_printf (const char *label, const char *file, int line,
 {
   if (gsl_stream == NULL)
     {
-      gsl_stream = stderr;
+  //    gsl_stream = stderr;
     }
   if (gsl_stream_handler)
     {
@@ -293,7 +293,7 @@ gsl_set_stream (FILE * new_stream)
 {
   FILE * previous_stream;
   if (gsl_stream == NULL) {
-    gsl_stream = stderr;
+ //   gsl_stream = stderr;
   }
   previous_stream = gsl_stream;
   gsl_stream = new_stream;
@@ -344,11 +344,11 @@ gsl_error (const char * reason, const char * file, int line, int gsl_errno)
 
   gsl_stream_printf ("ERROR", file, line, reason);
 
-  fflush (stdout);
-  fprintf (stderr, "Default GSL error handler invoked.\n");
-  fflush (stderr);
+//  fflush (stdout);
+ // fprintf (stderr, "Default GSL error handler invoked.\n");
+ // fflush (stderr);
 
-  abort ();
+ // abort ();
 }
 
 gsl_error_handler_t *

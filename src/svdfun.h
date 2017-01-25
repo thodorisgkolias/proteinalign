@@ -44,11 +44,11 @@ int dsvd(double **a, int m, int n, double *w, double **v)
     double anorm = 0.0, g = 0.0, scale = 0.0;
     double *rv1;
   
-    if (m < n) 
+ /*   if (m < n) 
     {
-        fprintf(stderr, "#rows must be > #cols \n");
+       fprintf(stderr, "#rows must be > #cols \n");
         return(0);
-    }
+    }*/
   
     rv1 = (double *)malloc((unsigned int) n*sizeof(double));
 
@@ -239,11 +239,11 @@ int dsvd(double **a, int m, int n, double *w, double **v)
                 }
                 break;
             }
-            if (its >= 30) {
+        /*    if (its >= 30) {
                 free((void*) rv1);
                 fprintf(stderr, "No convergence after 30,000! iterations \n");
                 return(0);
-            }
+        } */
     
             /* shift from bottom 2 x 2 minor */
             x = (double)w[l];
@@ -492,8 +492,9 @@ void dsvdcmp(double **a, int m, int n, double *w, double **v)
                         }
                         break;
                 }             
-                if (its == 30)
+            /*    if (its == 30)
                     fprintf(stderr, "no convergence in 30 dsvdcmp iterations");
+             */
                 x=w[l];
                 nm=k-1;
                 y=w[nm];
