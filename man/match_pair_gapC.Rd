@@ -1,5 +1,5 @@
-\name{match_pair_gapC}
-\alias{match_pair_gapC}
+\name{match.pair_gapC}
+\alias{match.pair_gapC}
 
 \title{Protein molecule matching}
 \description{
@@ -7,7 +7,7 @@
      }
 
 \usage{
-match_pair_gapC(data, SP = 10, n.cores = 8, volume = NULL,
+match.pair_gapC(data, SP = 10, n.cores = 8, volume = NULL,
                         jumps = 0, PAM = NULL, gap_open = 0, gap_ext = 0,
                         restrict = TRUE)
 }
@@ -38,7 +38,7 @@ data1 = readpdb('2gb1')
 data2 = readpdb('1ubq')
 data = list(data1,data2)
 
-ali1 = match_pair_gapC(data, SP = 5, restrict = FALSE)
-ali2 = match_pair_gapC(data, SP = 7, PAM = PAM[120], gap_open = 2, gap_ext = 10,
+ali1 = match.pair_gapC(data, SP = 5, restrict = FALSE)
+ali2 = match.pair_gapC(data, SP = 7, PAM = PAM[120], gap_open = 2, gap_ext = 10,
           restrict = FALSE)
 }
