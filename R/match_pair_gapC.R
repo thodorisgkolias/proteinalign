@@ -1,38 +1,32 @@
 #############################################
 #### Matching algorithm with C functions ####
-### Updated : 22/12/2016                  ###
+### Updated : 26/01/2017                  ###
 #############################################
-
-## Required libraries
-#library(parallel)
-#library(clue)
-#library(shapes)
-#library(msa)
-
-#if (Sys.info()['sysname'] == 'Linux'){
-#     dyn.load('Compiled_Code/Linux/EM_C.so')
-#} else {
-#     dyn.load('Compiled_Code/Mac/EM_C.so')
-#}
-
-
-#source('matchpair_func_gapC.R')
-#source('myrotsimlaplaceC.R')
-#source("Likelihood_X_&_Prior_L.R")
-#source('rmsdfunc.R')
-#source('readpdb.R')
-#source('SPchoose_new.R')
 
 
 
 match.pair_C = function(data, SP = 10, n.cores = 8, volume = NULL,
                         jumps = 0, PAM = NULL, gap_open = 0, gap_ext = 0,
                         restrict = TRUE) {
-     ## If SP is a number then automatic selection of starting points.
-     ## If PAM = NULL no sequence information.
-     ## If gap_open = 0 & gap_ext = 0 no gap penalty is used.
-     ## IF restrict = TRUE then the search is happening only on pairs
-     ## that preserve the sequence order.
+     if( !is.list(data) ) {
+          stop('data must be a list.')
+     } else {
+          nam = lapply(data,names)
+          if ( any(unlist(lapply(nam, 
+                                 function(x) x != c('amino','x','y','z')))) ) {
+               stop('data must be in the format of readpdb.')
+          }
+     }
+     
+     if ( is.matrix(SP)) {
+          if (dim(SP)[1]<5 | dim(SP)[2] != length(data)) {
+     stop('Starting points must be at least 5 landmarks for each molecule')
+          }
+     } else {
+          if (is.vector(SP) | SP<5) {
+     stop('Starting points must be at least 5 landmarks for each molecule')
+          }
+     }
 
      if (restrict) {
           hungarian.step = hungarian.step1
