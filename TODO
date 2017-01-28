@@ -1,10 +1,11 @@
 # DOCUMENTATION
- - add MAN file, documentation for each function.
+ - documentation for each function and data set.
 
 # DATASETS
- - add Data file, include PAM data, possibly a dataset for the EM/Procustes.
+ - dataset for the EM/Procustes.
 
 # Code
+ - add procrustes code in C.
  - replace procrustes from shapes with procrustes function in C.
  - add functions to extract data in .pdb format and plot protein shapes. 
  
