@@ -1,6 +1,6 @@
 ## rotation integral
 myrotsim.laplaceC = function(l) {
-     res = .Call("dointeg2", as.double(l), out = as.double(rep(0, 4)))$out
+     res = .C("dointeg2", as.double(l), out = as.double(rep(0, 4)))$out
      return(res)
 }
 ## EM 
@@ -12,7 +12,7 @@ EM_C<-function(x){
      k = d[1]
      n = d[3]
      x0 = x
-     a = .Call("EM_C",as.double(x0), as.integer(k), as.integer(m), as.integer(n),
+     a = .C("EM_C",as.double(x0), as.integer(k), as.integer(m), as.integer(n),
             out = x0, sig = 0,lik = 0)
      rm(x0)
      a$out = a$out[-k, , ]
