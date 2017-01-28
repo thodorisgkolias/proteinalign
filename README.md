@@ -21,5 +21,5 @@ biocLite("msa")
 ### Authors
 
 ### License
-GPL 2
+GPL-2
 
