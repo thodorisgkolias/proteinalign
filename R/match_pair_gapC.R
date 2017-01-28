@@ -16,12 +16,12 @@ match.pair_C = function(data, SP = 10, n.cores = 8, volume = NULL,
           }
      }
      
-     if ( is.matrix(SP)) {
+     if (is.matrix(SP)) {
           if (dim(SP)[1]<5 | dim(SP)[2] != length(data)) {
      stop('Starting points must be at least 5 landmarks for each molecule')
           }
      } else {
-          if (is.vector(SP) | SP<5) {
+          if (length(SP)!= 1 | SP<5) {
      stop('Starting points must be at least 5 landmarks for each molecule')
           }
      }
