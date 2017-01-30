@@ -176,17 +176,17 @@ match.pair_C = function(data, SP = 10, n.cores = 8, volume = NULL,
                                  matched = hist, vol = vol, PAM = PAM,
                                  gap_ext = gap_ext, gap_open = gap_open)
                } else {
-                    res = mclapply(LL,lik.match.gapC, data = X, seq=seq,
-                                   matched = hist, vol = vol, PAM = PAM,
-                                   gap_ext = gap_ext, gap_open = gap_open,
-                                   mc.cores=cores, mc.cleanup = TRUE)
+                    res = mclapply(LL,lik.match.gapC, mc.cores=cores, data = X,
+                                   seq=seq, matched = hist, vol = vol,
+                                   PAM = PAM, gap_ext = gap_ext,
+                                   gap_open = gap_open)
                }
                res = unlist(res)
                res = as.numeric(res)
                print('Add Pairs')
                hung = hungarian.step(data = X, seq=seq, lik = res, lik0 = lik0,
-                                     matched = hist,comb2=comb2, rows2 = rows2, vol = vol,
-                                     PAM = PAM, gap_open = gap_open,
+                                     matched = hist,comb2=comb2, rows2 = rows2,
+                                     vol = vol, PAM = PAM, gap_open = gap_open,
                                      gap_ext = gap_ext)
                lik0 = hung$lik0
                hist = hung$hist
