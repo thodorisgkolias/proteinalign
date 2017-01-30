@@ -24,8 +24,7 @@ SPchoose = function(data1, data2, k = 4,cut = 0.2) {
      x0 = AAStringSet(c(seq1, seq2))
      #res1 = msa(x0,method = 'ClustalW')
      #res2 = msa(x0,method = 'ClustalOmega')
-     res1 = msa(x0, method = 'Muscle',
-                type = 'protein')
+     res1 = msa(x0, method = 'Muscle', type = 'protein')
      s1 = strsplit(as.character(slot(res1, 'unmasked')[1]), '')[[1]]
      s2 = strsplit(as.character(slot(res1, 'unmasked')[2]), '')[[1]]
      ind1 = extract.ind(s1)
@@ -40,11 +39,11 @@ SPchoose = function(data1, data2, k = 4,cut = 0.2) {
           data.proc = array(NA,dim = c(dim(ali.mat)[1], 3, 2))
           data.proc[, , 1] = as.matrix(data1[ali.mat[, 1], -1])
           data.proc[, , 2] = as.matrix(data2[ali.mat[, 2], -1])
-          proc = procGPA(data.proc)
+          proc = gpa_C(data.proc)
           euc.dist = NULL
           for (i in 1:dim(ali.mat)[1]) {
-               euc.dist[i] = dist(rbind(proc$rotated[i, , 1],
-                                        proc$rotated[i, , 2]))
+               euc.dist[i] = dist(rbind(proc$rot[i, , 1],
+                                        proc$rot[i, , 2]))
           }
           TM = 1 / (1 + (euc.dist^2) / (d0^2))
           #m = median(TM)

@@ -1,9 +1,9 @@
 
-riemd = function(X, Y) {
+#riemd = function(X, Y) {
      ## Riemannian distance
-     res = ssriemdist(X, Y, FALSE)
-     return(res)
-}
+#     res = ssriemdist(X, Y, FALSE)
+#     return(res)
+#}
 
 log.lik.nodD = function(X, mu, sigma, p, M, A) {
      ## Computes the size and shape likelihood of a matched matrix X

@@ -12,7 +12,7 @@ Similarity.metrics = function(data1, data2, sol) {
      data.proc = array(NA, dim = c(dim(sol)[1], 3, 2))
      data.proc[, , 1] = data1[sol[, 1], ]
      data.proc[, , 2] = data2[sol[, 2], ]
-     rot = procGPA(data.proc)$rot
+     rot = gpa_C(data.proc)$rot
      ## RMSD
      rmsd = round(RMSD(rot[, , 1], rot[, , 2]), 1)
      ## TMscore
