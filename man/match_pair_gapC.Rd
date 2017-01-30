@@ -34,6 +34,7 @@ match.pairC(data, SP = 10, n.cores = 8, volume = NULL,
 }     
 \author{Thodoris Gkolias}
 \examples{
+## Not run:
 data1 = readpdb('2gb1')
 data2 = readpdb('1ubq')
 data = list(data1,data2)
@@ -41,4 +42,5 @@ data = list(data1,data2)
 ali1 = match.pair_C(data, SP = 5, restrict = FALSE)
 ali2 = match.pair_C(data, SP = 7, PAM = PAM[[120]], gap_open = 2, gap_ext = 10,
           restrict = FALSE)
+## End(Not run)          
 }
