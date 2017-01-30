@@ -583,105 +583,370 @@ void dointeg2(double *l, double *out) {
 
      
      
-
-/*
-int main(void) {
- struct matrix3d *data;
- data = matrix3d_blank(10,3,2);
- data -> e[0][0][0] =   7.534;
- data -> e[1][0][0] =  -3.922;
- data -> e[2][0][0] = -0.651;
- data -> e[3][0][0] = -12.201;
- data -> e[4][0][0] = -7.173;
- data -> e[5][0][0] =   -8.673;
- data -> e[6][0][0] =  -4.889;
- data -> e[7][0][0] = -0.108;
- data -> e[8][0][0] = -9.669;
- data -> e[9][0][0] = -5.350;
-
- data -> e[0][1][0] = -3.776 ;
- data -> e[1][1][0] =  -3.881;
- data -> e[2][1][0] = -2.752;
- data -> e[3][1][0] =  3.975;
- data -> e[4][1][0] = -2.314;
- data -> e[5][1][0] = -6.154;
- data -> e[6][1][0] = -6.162 ;
- data -> e[7][1][0] = -1.143;
- data -> e[8][1][0] = -0.447;
- data -> e[9][1][0] = 2.653;
-
- data -> e[0][2][0] =  -4.109;
- data -> e[1][2][0] = 4.044;
- data -> e[2][2][0] =  2.466;
- data -> e[3][2][0] = -3.121;
- data -> e[4][2][0] =2.811;
- data -> e[5][2][0] =  0.203;
- data -> e[6][2][0] = 0.598;
- data -> e[7][2][0] =  7.430;
- data -> e[8][2][0] = 4.998;
- data -> e[9][2][0] = 5.692;
-
- data -> e[0][0][1] = 30.479;
- data -> e[1][0][1] = 26.772;
- data -> e[2][0][1] =28.605;
- data -> e[3][0][1] =  25.829 ;
- data -> e[4][0][1] =  26.235;
- data -> e[5][0][1] =21.419;
- data -> e[6][0][1] = 23.212;
- data -> e[7][0][1] = 31.720;
- data -> e[8][0][1] = 26.850;
- data -> e[9][0][1] = 31.677;
-
- data -> e[0][1][1] = 35.369;
- data -> e[1][1][1] =  33.436;
- data -> e[2][1][1] = 33.965;
- data -> e[3][1][1] = 19.825;
- data -> e[4][1][1] = 30.058;
- data -> e[5][1][1] = 30.253;
- data -> e[6][1][1] = 32.762;
- data -> e[7][1][1] = 36.289;
- data -> e[8][1][1] = 29.021;
- data -> e[9][1][1] = 30.275;
-
- data -> e[0][2][1] = 22.374;
- data -> e[1][2][1] =  9.197;
- data -> e[2][2][1] = 12.503;
- data -> e[3][2][1] =  8.494;
- data -> e[4][2][1] =  7.497;
- data -> e[5][2][1] =  9.620;
- data -> e[6][2][1] = 11.891;
- data -> e[7][2][1] =  9.176;
- data -> e[8][2][1] = 3.898;
- data -> e[9][2][1] = 6.639;
-
- EM(data);
- 
-}
-*/
-
-/*
-int main(void) {
-     double data[60] = {7.534,-3.922,-0.651,-12.201,-7.173,-8.673,-4.889,-0.108,-9.669,-5.350,-3.776,-3.881,-2.752,3.975,-2.314,-6.154,-6.162,-1.143,-0.447,2.653,-4.109,4.044,2.466,-3.121,2.811,0.203,0.598,7.430,4.998,5.692,30.479,26.772,28.605,25.829,26.235,21.419,23.212,31.720,26.850,31.677,35.369,33.436,33.965,19.825,30.058,30.253,32.762,36.289,29.021,30.275,22.374,9.197,12.503,8.494,7.497,9.620,11.891,9.176,3.898,6.639};
-     double *vec;
-     vec = data;
-     int nr[1],nc[1],nb[1];
-     nr[0] = 10;
-     nc[0] = 3;
-     nb[0] = 2;
-     int *nrow, *ncol, *nblo;
-     nrow = nr;
-     ncol = nc;
-     nblo = nb;
-     double lik1[1], sig1[1];
-     double *out, *lik, *sig;
-     lik1[0] = 0;
-     sig1[0] = 1;
-     lik = lik1;
-     sig = sig1;
-     out = data;
      
-     EM_C(vec,nrow,ncol,nblo,out,sig,lik);     
-
+     void ctorrgpa(double *vectortemp, int *nrow, int *ncol, int *nblo, int *rescale, int *reflect,double *tol1, double *tol2,double *out)
+     {
+          struct matrix3d *temp;
+          temp=matrix3d_blank((int) *nrow, (int) *ncol,(int) *nblo);
+          int i,j,k,n,nr,nc,nb;
+          nr=(int) *nrow;
+          nc=(int) *ncol;
+          nb=(int) *nblo;
+          
+          for (k=0;k<temp->nblo;k++)
+          {
+               for (j=0;j<temp->ncol;j++)
+               {
+                    for (i=0;i<temp->nrow;i++)
+                    {
+                         /*
+                         * Read elements of matrix along the rows
+                         */
+                         temp->e[i][j][k]=vectortemp[(k)*nc*nr+(nr)*j+i];      
+                    }
+               }
+          }   
+          // printf("%lf \n",dif(temp));
+          
+          temp=GPA1(temp,(int) *rescale, *reflect,(double) *tol1, (double) *tol2);
+          
+          for (k=0;k<temp->nblo;k++)
+          {
+               for (j=0;j<temp->ncol;j++) 
+               {
+                    for (i=0;i<temp->nrow;i++)
+                    {
+                         /*
+                         * Read elements of matrix along the rows
+                         */
+                         out[(k)*nc*nr+(nr)*j+i]=temp->e[i][j][k];
+                    }
+               }
+          }  
+          matrix3d_free(temp);
      }
+
+void diam(double *vectortemp, int *nrow, int *ncol, int *nblo, int *presh,int *refl, double *out)
+{
+     struct matrix *temp1,*temp2;
+     struct matrix3d *temp;
+     temp=matrix3d_blank((int) *nrow, (int) *ncol,(int) *nblo);
+     
+     int i,j,k,n,nr,nc,nb,pr,ref;
+     nr=(int) *nrow;
+     nc=(int) *ncol;
+     nb=(int) *nblo;
+     pr=(int) *presh;
+     ref=(int) *refl;
+     temp1=matrix_blank(nr,nc);
+     temp2=matrix_blank(nr,nc);
+     double s,d;
+     s=0;
+     
+     for (k=0;k<temp->nblo;k++)
+     {
+          for (j=0;j<temp->ncol;j++)
+          {
+               for (i=0;i<temp->nrow;i++)
+               {
+                    /*
+                    * Read elements of matrix along the rows
+                    */
+                    temp->e[i][j][k]=vectortemp[(k)*nc*nr+(nr)*j+i];      
+               }
+          }
+     } 
+     if (ref==1) 
+     {
+          
+          if (pr==1)
+          {
+               for (k=0;k<nb;k++)
+               {
+                    for (i=0;i<k+1;i++)
+                    {   
+                         get_matrix_inplace(temp,k,temp1);
+                         get_matrix_inplace(temp,i,temp2);  
+                         /*d=riemdist_reflect(temp1,temp2);*/
+                         d=riemdist_preshape_reflect(temp1,temp2);
+                         if (s < d)
+                              s=d;
+                    }   
+               }
+          }
+          else
+          {
+               for (k=0;k<nb;k++)
+               {
+                    for (i=0;i<k+1;i++)
+                    {   
+                         get_matrix_inplace(temp,k,temp1);
+                         get_matrix_inplace(temp,i,temp2);  
+                         d=riemdist_reflect(temp1,temp2);
+                         /*d=riemdist_preshape_reflect(temp1,temp2);*/
+                         if (s < d)
+                              s=d;
+                    }   
+               }
+          }
+          
+     }
+     else 
+     {
+          if (pr==1)
+          {
+               for (k=0;k<nb;k++)
+               {
+                    for (i=0;i<k+1;i++)
+                    {   
+                         get_matrix_inplace(temp,k,temp1);
+                         get_matrix_inplace(temp,i,temp2);  
+                         /*d=riemdist_reflect(temp1,temp2);*/
+                         d=riemdist_preshape(temp1,temp2);
+                         if (s < d)
+                              s=d;
+                    }   
+               }
+          }
+          else
+          {
+               for (k=0;k<nb;k++)
+               {
+                    for (i=0;i<k+1;i++)
+                    {   
+                         get_matrix_inplace(temp,k,temp1);
+                         get_matrix_inplace(temp,i,temp2);  
+                         d=riemdist(temp1,temp2);
+                         /*d=riemdist_preshape_reflect(temp1,temp2);*/
+                         if (s < d)
+                              s=d;
+                    }   
+               }
+          }
+          
+     }
+     out[0]=s;   
+     matrix3d_free(temp);
+     matrix_free(temp1);
+     matrix_free(temp2);
+}
+
+
+void rpackagergpa(double *vectortemp, int *nrow, int *ncol, int *nblo,int *reflect,double *tol1,double *out)
+{
+     struct matrix3d *temp;
+     temp=matrix3d_blank((int) *nrow, (int) *ncol,(int) *nblo);
+     int i,j,k,n,nr,nc,nb,ref;
+     nr=(int) *nrow;
+     nc=(int) *ncol;
+     nb=(int) *nblo;
+     ref=(int) *reflect;
+     
+     for (k=0;k<temp->nblo;k++)
+     {
+          for (j=0;j<temp->ncol;j++)
+          {
+               for (i=0;i<temp->nrow;i++)
+               {
+                    /*
+                    * Read elements of matrix along the rows
+                    */
+                    temp->e[i][j][k]=vectortemp[(k)*nc*nr+(nr)*j+i];      
+               }
+          }
+     }   
+     cnt3(temp);
+     if (ref==1)
+          temp=rgpa(temp,(double) *tol1);
+     else
+     {
+          temp=rgpa_rot(temp,(double) *tol1);
+     }    
+     for (k=0;k<temp->nblo;k++)
+     {
+          for (j=0;j<temp->ncol;j++) 
+          {
+               for (i=0;i<temp->nrow;i++)
+               {
+                    /*
+                    * Read elements of matrix along the rows
+                    */
+                    out[(k)*nc*nr+(nr)*j+i]=temp->e[i][j][k];
+               }
+          }
+     }  
+     
+     matrix3d_free(temp);
+}
+
+
+
+void rpackagesgpa(double *vectortemp, int *nrow, int *ncol, int *nblo,double *out)
+{
+     struct matrix3d *temp;
+     temp=matrix3d_blank((int) *nrow, (int) *ncol,(int) *nblo);
+     
+     
+     int i,j,k,n,nr,nc,nb;
+     nr=(int) *nrow;
+     nc=(int) *ncol;
+     nb=(int) *nblo;
+     
+     for (k=0;k<temp->nblo;k++)
+     {
+          for (j=0;j<temp->ncol;j++)
+          {
+               for (i=0;i<temp->nrow;i++)
+               {
+                    /*
+                    * Read elements of matrix along the rows
+                    */
+                    temp->e[i][j][k]=vectortemp[(k)*nc*nr+(nr)*j+i];      
+               }
+          }
+     }   
+     
+     sgpa(temp);
+     for (k=0;k<temp->nblo;k++)
+     {
+          for (j=0;j<temp->ncol;j++) 
+          {
+               for (i=0;i<temp->nrow;i++)
+               {
+                    /*
+                    * Read elements of matrix along the rows
+                    */
+                    out[(k)*nc*nr+(nr)*j+i]=temp->e[i][j][k];
+               }
+          }
+     }  
+     
+     matrix3d_free(temp);
+}
+
+/*
+Function produces the icon of a given preshape
 */
 
+void preshapetoiconctor(double *vectortemp, int *nrow, int *ncol, double *out)
+{
+     struct matrix *temp, *temp1;
+     int i,j,k,n,nr,nc,nb;
+     nr=(int) *nrow;
+     nc=(int) *ncol;
+     temp=matrix_blank((int) *nrow, (int) *ncol);
+     for (i=0;i<temp->nrow;i++)
+     {
+          for (j=0;j<temp->ncol;j++)
+          {
+               /*
+               * Read elements of matrix along the rows
+               */
+               temp->e[i][j]=vectortemp[(nc)*i+j];      
+          }
+     }
+     
+     /*temp1=matrix_blank((int) *nrow, (int) *ncol);*/
+     
+     temp1=preshapetoicon_transform(temp);
+     /*matrix_print(temp1);*/
+     matrix_free(temp);
+     for (i=0;i<temp1->nrow;i++)
+     {
+          for (j=0;j<temp1->ncol;j++)
+          {
+               /*
+               * Read elements of matrix along the rows
+               */
+               out[(nc)*i+j]=temp1->e[i][j];
+          }
+     }
+     matrix_free(temp1);
+}
+
+/*
+* Function performs centering of the configurations
+*/
+void rpackagercnt3(double *vectortemp, int *nrow, int *ncol, int *nblo,double *out)
+{
+     struct matrix3d *temp;
+     temp=matrix3d_blank((int) *nrow, (int) *ncol,(int) *nblo);
+     int i,j,k,n,nr,nc,nb,ref;
+     nr=(int) *nrow;
+     nc=(int) *ncol;
+     nb=(int) *nblo;
+     
+     for (k=0;k<temp->nblo;k++)
+     {
+          for (j=0;j<temp->ncol;j++)
+          {
+               for (i=0;i<temp->nrow;i++)
+               {
+                    /*
+                    * Read elements of matrix along the rows
+                    */
+                    temp->e[i][j][k]=vectortemp[(k)*nc*nr+(nr)*j+i];      
+               }
+          }
+     }   
+     cnt3(temp);
+     for (k=0;k<temp->nblo;k++)
+     {
+          for (j=0;j<temp->ncol;j++) 
+          {
+               for (i=0;i<temp->nrow;i++)
+               {
+                    /*
+                    * Read elements of matrix along the rows
+                    */
+                    out[(k)*nc*nr+(nr)*j+i]=temp->e[i][j][k];
+               }
+          }
+     }  
+     
+     matrix3d_free(temp);
+}
+
+/*
+Function produces the preshape of a given config
+*/
+
+void preshapector(double *vectortemp, int *nrow, int *ncol,int *rescale, double *out)
+{
+     struct matrix *temp, *temp1;
+     int i,j,k,n,nr,nc,nb,rescl;
+     nr=(int) *nrow;
+     nc=(int) *ncol;
+     rescl=(int) *rescale;
+     temp=matrix_blank((int) *nrow, (int) *ncol);
+     for (i=0;i<temp->nrow;i++)
+     {
+          for (j=0;j<temp->ncol;j++)
+          {
+               /*
+               * Read elements of matrix along the rows
+               */
+               temp->e[i][j]=vectortemp[(nc)*i+j];      
+          }
+     }
+     
+     /*temp1=matrix_blank((int) *nrow, (int) *ncol);*/
+     temp1=preshape_transform(temp,rescl);
+     /*matrix_print(temp1);*/
+     matrix_free(temp);
+     for (i=0;i<temp1->nrow;i++)
+     {
+          for (j=0;j<temp1->ncol;j++)
+          {
+               /*
+               * Read elements of matrix along the rows
+               */
+               out[(nc)*i+j]=temp1->e[i][j];
+          }
+     }
+     matrix_free(temp1);
+}
+
+/*
+* Functions performs gpa algorithm by saving the data and the file locally so saves the swap space(hopefully)
+*/
