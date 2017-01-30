@@ -10,7 +10,6 @@ Depends:
     Biostrings (>= 2.30.0)
 Imports:
     msa,
-    shapes,
     clue,
     parallel,
     methods

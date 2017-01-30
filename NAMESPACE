@@ -2,7 +2,6 @@ exportPattern("^[^\\.]")
 
 importFrom(parallel, "mclapply")
 importFrom(clue,"solve_LSAP")
-importFrom(shapes,"procGPA")
 import(Biostrings)
 import(msa)
 
