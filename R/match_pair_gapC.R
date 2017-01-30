@@ -6,6 +6,7 @@
 match.pair_C = function(data, SP = 10, n.cores = 8, volume = NULL,
                         jumps = 0, PAM = NULL, gap_open = 0, gap_ext = 0,
                         restrict = FALSE) {
+     
      if( !is.list(data) ) {
           stop('data must be a list.')
      } else {
@@ -15,7 +16,6 @@ match.pair_C = function(data, SP = 10, n.cores = 8, volume = NULL,
                stop('data must be in the format of readpdb.')
           }
      }
-     
      if (is.matrix(SP)) {
           if (dim(SP)[1]<5 | dim(SP)[2] != length(data)) {
      stop('Starting points must be at least 5 landmarks for each molecule')
@@ -25,11 +25,14 @@ match.pair_C = function(data, SP = 10, n.cores = 8, volume = NULL,
      stop('Starting points must be at least 5 landmarks for each molecule')
           }
      }
-
      if (restrict) {
           hungarian.step = hungarian.step1
      } else {
           hungarian.step = hungarian.step
+     }
+     if (Sys.info()['sysname'] == 'Windows') {
+          mclapply = mclapply.win
+          print('NOTE: parLapply is used for parallel computing.')
      }
      start.time = proc.time()[3]
      
@@ -122,10 +125,9 @@ match.pair_C = function(data, SP = 10, n.cores = 8, volume = NULL,
                        vol = vol, PAM = PAM,
                        gap_ext = gap_ext, gap_open = gap_open)
      } else {
-          res = mclapply(LL, lik.match.gapC, data = X, seq = seq,
-                         matched = hist, vol = vol, PAM = PAM,
-                         gap_ext = gap_ext, gap_open = gap_open, mc.cores=cores,
-                         mc.cleanup=TRUE)
+          res = mclapply(LL, lik.match.gapC, mc.cores=cores,
+                         data = X, seq = seq, matched = hist, vol = vol,
+                         PAM = PAM, gap_ext = gap_ext, gap_open = gap_open)
      }
 
      res = as.numeric(unlist(res))
