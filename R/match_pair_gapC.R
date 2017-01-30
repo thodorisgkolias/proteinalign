@@ -124,7 +124,7 @@ match.pair_C = function(data, SP = 10, n.cores = 8, volume = NULL,
      } else {
           res = mclapply(LL, lik.match.gapC, data = X, seq = seq,
                          matched = hist, vol = vol, PAM = PAM,
-                         gap_ext = gap_ext, gap_open = gap_open, mc.cores=24,
+                         gap_ext = gap_ext, gap_open = gap_open, mc.cores=cores,
                          mc.cleanup=TRUE)
      }
 
