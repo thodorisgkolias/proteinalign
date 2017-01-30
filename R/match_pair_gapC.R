@@ -5,7 +5,7 @@
 
 match.pair_C = function(data, SP = 10, n.cores = 8, volume = NULL,
                         jumps = 0, PAM = NULL, gap_open = 0, gap_ext = 0,
-                        restrict = TRUE) {
+                        restrict = FALSE) {
      if( !is.list(data) ) {
           stop('data must be a list.')
      } else {
