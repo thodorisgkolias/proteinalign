@@ -34,3 +34,19 @@ Similarity.metrics = function(data1, data2, sol) {
      return(list(rmsd = rmsd, TMscore = TMscore, SO = SO))
 }
 
+
+similarity_transf = function(X,Xrot) {
+     n = dim(X)[3]
+     m = dim(X)[2]
+     R = array(, dim=c(m, m, n))
+     location = matrix(, m, n)
+     X_cnt = cnt3_C(X)
+     Xrot_cnt = cnt3_C(Xrot)
+     for (i in 1:n) {
+          location[, i] = apply(X[, , i] - Xrot[, , i], 2, mean)
+          SS = svd.m_new(t(X_cnt[, , i]) %*% Xrot_cnt[, , i])
+          R[, , i] = t(SS$v %*% t(SS$u))
+     }
+     out = list(location = location , R = R)
+     return(out)
+}

@@ -3,7 +3,8 @@ export(log.lik.nodD, data_extract, amino_transf,
        svd.m_new, PAM_log_lik, lik.match.gapC,
       gap_penalty, mclapply.win, EM_C, gpa_C,
       riemdist_C, preshape_C, vectorhelmert_C,
-      RMSD, Similarity.metrics, SPchoose
+      RMSD, Similarity.metrics, SPchoose, 
+      similarity_transf
 )
 
 importFrom(parallel, "mclapply")
