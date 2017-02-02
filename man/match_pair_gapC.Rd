@@ -1,31 +1,31 @@
-\name{match.pairC}
-\alias{match.pairC}
+\name{ProteinAlign}
+\alias{ProteinAlign}
 
-\title{Protein molecule matching}
+\title{Protein molecule alignment}
 \description{
-     Performs pairwise and multipair matching of protein molecules, using the size and shape likelihood for obtaining the matched mean and the Hungarian algorithm to determine the optimal matching.
+     Performs pairwise and multipair alignment of protein molecules, using the size and shape likelihood for obtaining the matched mean and the Hungarian algorithm to determine the optimal matching.
      }
 
 \usage{
-match.pairC(data, SP = 10, n.cores = 8, volume = NULL,
+ProteinAlign(data, SP = 10, n.cores = 8, volume = NULL,
                         jumps = 0, PAM = NULL, gap_open = 0, gap_ext = 0,
-                        restrict = TRUE)
+                        restrict = FALSE)
 }
 \arguments{
-\item{data}{A list of length at least 2 in the format created by readpdb. Each element is a data frame of dimensions k x 4, where the first column is the amino acid sequence and the rest the 3-dimensional coordinates.}
-\item{SP}{If it is a number then automatic selection of starting points take place, else a matrix p x n with p>4.}
+\item{data}{A list of length at least 2 in the format created by LoadPDB or ReadPDB.}
+\item{SP}{Number or matrix, if a number automatic selection of starting points, else a matrix p x n with p>4.}
 \item{n.cores}{The number of cores to be used for parallel computing.}
 \item{volume}{If volume = NULL the volume is calculated from the data.}
 \item{jumps}{Number of random matching jumps to be performed, if jumps = 0 algorithm runs without random jumps.}
 \item{PAM}{PAM matrix to be used for sequence structure matching, if PAM = NULL no PAM matrix is used.}
 \item{gap_open}{Gap opening penalty, if gap_open = 0 no gap opening penalty is used.}
 \item{gap_ext}{Gap extension penalty, if gap_ext = 0 no gap extension penalty is used.}
-\item{restirct}{If TRUE then search for optimal matching happens only on pairs that preserve sequence order.}
+\item{restrict}{If TRUE then search for optimal matching happens only on pairs that preserve sequence order.}
 }
 
 \value{A list with components
 \item{align}{p x m matrix with the matching correspondence of each landmark.}
-\item{M}{number of matched landmarks.}
+\item{M}{Number of matched landmarks.}
 \item{rmsd}{RMSD of the final alignment.}
 \item{TMScore}{TMscore of the final alignment.}
 \item{SO}{Structure overlap of the final alignment.}
@@ -34,11 +34,16 @@ match.pairC(data, SP = 10, n.cores = 8, volume = NULL,
 }     
 \author{Thodoris Gkolias}
 \examples{
-data1 = readpdb('2gb1')
-data2 = readpdb('1ubq')
+## Loading data from the RCSB protein data bank
+data1 = LoadPDB('2gb1')
+data2 = LoadPDB('1ubq')
 data = list(data1,data2)
 
-ali1 = match.pair_C(data, SP = 5, n.cores = 2, restrict = FALSE)
-ali2 = match.pair_C(data, SP = 7, n.cores = 2, PAM = PAM[[120]], gap_open = 2, gap_ext = 10,
-          restrict = FALSE)
+##  Alignment using 5 automatic selected landmarks 
+ali1 = ProteinAlign(data, SP = 5, n.cores = 2)
+
+## Alignment using user specified starting points and PAM matrix
+SP_user = cbind(c(2,3,4,5,16,18,22,50), c(2,3,4,5,13,15,19,65))
+PAM120 = PAM[[120]]
+ali2 = ProteinAlign(data, SP = SP_user, n.cores = 2, PAM = PAM120)
 }

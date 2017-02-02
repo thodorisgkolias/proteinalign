@@ -1,4 +1,4 @@
-data_extract = function(data, atom = 'CA') {
+DataExtract = function(data, atom = 'CA') {
      ## data must be an output from readpdb.
      ## selects the amino acid sequence and the coordinates columns.
      temp = data[data[, 3] == atom, c(4, 7, 8, 9)]
@@ -6,13 +6,13 @@ data_extract = function(data, atom = 'CA') {
 }
 
 
-split_str = function(st) {
+SplitStr1 = function(st) {
      temp = unlist(strsplit(st, ' '))
      temp2 = temp[temp != '']
      return(temp2)	
 }
 
-amino_transf = function(data) {
+AminoTransf = function(data) {
      ## Transforms the names of the amino acid sequence.
      
      freqs1 = c('ALA', 'ARG', 'ASN', 'ASP', 'CYS', 'GLN', 'GLU', 'GLY', 'HIS',
@@ -31,7 +31,7 @@ amino_transf = function(data) {
      return(data)
 }
 
-readpdb = function(pdb, atom = 'CA', chain = 'A') {
+LoadPDB = function(pdb, atom = 'CA', chain = 'A') {
      if (nchar(pdb) != 4) {
           stop('No PDB file found')
      }
@@ -41,8 +41,8 @@ readpdb = function(pdb, atom = 'CA', chain = 'A') {
      data1 = readLines(file, n =-1)
      choose = substring(data1, 1, 6)
      atoms = data1[choose == 'ATOM  ']
-     clean.data = lapply(atoms, substring, ind1, ind2)
-     newd = lapply(clean.data, split_str)
+     clean_data = lapply(atoms, substring, ind1, ind2)
+     newd = lapply(clean_data, SplitStr1)
      rm_col = which(lapply(newd, length) != 12)
      if(length(rm_col) != 0) {
           for (i in rm_col) {
@@ -61,16 +61,15 @@ readpdb = function(pdb, atom = 'CA', chain = 'A') {
      out[, 7] = as.numeric(levels(out[, 7]))[out[, 7]]
      out[, 8] = as.numeric(levels(out[, 8]))[out[, 8]]
      out[, 9] = as.numeric(levels(out[, 9]))[out[, 9]]
-     cat('', 'Loading...', '\n')
-     cat('', split_str(data1[choose == 'HEADER'])[-1], '\n')
+     cat('', SplitStr1(data1[choose == 'HEADER'])[-1], '\n')
      
-     out = data_extract(data = amino_transf(data = out),  atom = atom)
+     out = DataExtract(data = AminoTransf(data = out),  atom = atom)
      return(out)
 }
 
 
 
-readdata = function(dir){ 
+ReadPDB = function(dir){ 
      ## Read pdb format data from a directory
      
      ind1 = c(1, 7, 13, 17, 18, 22, 23, 27, 31, 39, 47, 55, 61, 73, 77, 79)
@@ -78,8 +77,8 @@ readdata = function(dir){
      data1 = readLines(dir, n =-1)
      choose = substring(data1, 1, 6)
      atoms = data1[choose == 'ATOM  ']
-     clean.data = lapply(atoms, substring, ind1, ind2)
-     newd = lapply(clean.data, split_str)
+     clean_data = lapply(atoms, substring, ind1, ind2)
+     newd = lapply(clean_data, SplitStr1)
      ll = lapply(newd, length)
      ll = unlist(ll)
      for (jj in 1:length(ll)){
@@ -90,12 +89,12 @@ readdata = function(dir){
      out[, 6] = as.numeric(levels(out[, 6]))[out[, 6]]
      out[, 7] = as.numeric(levels(out[, 7]))[out[, 7]]
      out[, 8] = as.numeric(levels(out[, 8]))[out[, 8]]
-     out = amino_transf(out[out[, 3] == 'CA',c(4, 6, 7, 8)])
+     out = AminoTransf(out[out[, 3] == 'CA',c(4, 6, 7, 8)])
      return(out)
 }
 
 
-pam.transf = function(pam) {
+PamTransf = function(pam) {
      res = round(10^(pam/10), 6)
      return(res)
 }

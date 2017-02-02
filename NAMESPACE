@@ -1,10 +1,22 @@
-export(log.lik.nodD, data_extract, amino_transf,
-       readpdb, readdata, match.pair_C, norm,
-       svd.m_new, PAM_log_lik, lik.match.gapC,
-      gap_penalty, mclapply.win, EM_C, gpa_C,
-      riemdist_C, preshape_C, vectorhelmert_C,
-      RMSD, Similarity.metrics, SPchoose, 
-      similarity_transf
+export(LogLikSizeShape,
+       LoadPDB,
+       ReadPDB,
+       ProteinAlign,
+       Norm,
+       SvdNew,
+       PAMLogLik,
+       LogLikMatch,
+       mclapply.win,
+       RotSimLaplaceC,
+       EMSizeShape,
+       GpaC,
+       RiemdistC,
+       PreShapeC,
+       VectorHelmertC,
+       RMSD,
+       SimilarityMetrics,
+       SimilarityTransf,
+       SpChoose
 )
 
 importFrom(parallel, "mclapply")

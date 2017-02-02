@@ -1,5 +1,5 @@
 
-extract.ind = function(seq) {
+ExtractInd = function(seq) {
      ## finds the matching indices of a sequence.
      counter = 0
      ind=NULL
@@ -14,7 +14,7 @@ extract.ind = function(seq) {
      return(ind)
 }
 
-SPchoose = function(data1, data2, k = 4,cut = 0.2) {
+SpChoose = function(data1, data2, k = 4,cut = 0.2) {
      ## Returns a matrix of starting points.
      seq1 = data1[, 1]
      seq2 = data2[, 1]
@@ -27,25 +27,25 @@ SPchoose = function(data1, data2, k = 4,cut = 0.2) {
      res1 = msa(x0, method = 'Muscle', type = 'protein')
      s1 = strsplit(as.character(slot(res1, 'unmasked')[1]), '')[[1]]
      s2 = strsplit(as.character(slot(res1, 'unmasked')[2]), '')[[1]]
-     ind1 = extract.ind(s1)
-     ind2 = extract.ind(s2)
-     ali.mat = cbind(ind1, ind2)
-     gaps = which(ali.mat == 0, arr.ind = TRUE)
-     ali.mat = ali.mat[-gaps[, 1], ]
+     ind1 = ExtractInd(s1)
+     ind2 = ExtractInd(s2)
+     ali_mat = cbind(ind1, ind2)
+     gaps = which(ali_mat == 0, arr.ind = TRUE)
+     ali_mat = ali_mat[-gaps[, 1], ]
      reps = 1
      d0 = 1.24 * (Lmin - 15)^(1 / 3) - 1.8
      cond = TRUE
      while (reps < 30 && cond) {
-          data.proc = array(NA,dim = c(dim(ali.mat)[1], 3, 2))
-          data.proc[, , 1] = as.matrix(data1[ali.mat[, 1], -1])
-          data.proc[, , 2] = as.matrix(data2[ali.mat[, 2], -1])
-          proc = gpa_C(data.proc)
-          euc.dist = NULL
-          for (i in 1:dim(ali.mat)[1]) {
-               euc.dist[i] = dist(rbind(proc$rot[i, , 1],
+          data_proc = array(NA,dim = c(dim(ali_mat)[1], 3, 2))
+          data_proc[, , 1] = as.matrix(data1[ali_mat[, 1], -1])
+          data_proc[, , 2] = as.matrix(data2[ali_mat[, 2], -1])
+          proc = GpaC(data_proc)
+          euc_dist = NULL
+          for (i in 1:dim(ali_mat)[1]) {
+               euc_dist[i] = dist(rbind(proc$rot[i, , 1],
                                         proc$rot[i, , 2]))
           }
-          TM = 1 / (1 + (euc.dist^2) / (d0^2))
+          TM = 1 / (1 + (euc_dist^2) / (d0^2))
           #m = median(TM)
           #std = sd(TM)
           #cut = m+sig*std
@@ -53,24 +53,24 @@ SPchoose = function(data1, data2, k = 4,cut = 0.2) {
           if (length(rows) == 0) {
                break
           }
-          ali.mat = ali.mat[-rows, ]
+          ali_mat = ali_mat[-rows, ]
           reps = reps + 1
-          if (is.null(dim(ali.mat)[1])) {
+          if (is.null(dim(ali_mat)[1])) {
                cond = FALSE
           } else {
-               if (dim(ali.mat)[1] < 3){
+               if (dim(ali_mat)[1] < 3){
                     cond = FALSE
                }
           }
           
      }
-     if (!is.null(dim(ali.mat)[1])) {
-          if (dim(ali.mat)[1] != 0) {
-               if (k <= dim(ali.mat)[1]) {
-                    SP = ali.mat[order(-TM)[1:k], ]
+     if (!is.null(dim(ali_mat)[1])) {
+          if (dim(ali_mat)[1] != 0) {
+               if (k <= dim(ali_mat)[1]) {
+                    SP = ali_mat[order(-TM)[1:k], ]
                     SP = SP[!is.na(SP[, 1]), ]
                } else {
-                    SP = ali.mat
+                    SP = ali_mat
                }
                if (dim(SP)[1] < k) {
                     print('Less Starting points selected')
@@ -79,7 +79,7 @@ SPchoose = function(data1, data2, k = 4,cut = 0.2) {
                SP = matrix(0, 1, 1)
           }
      } else {
-          SP = ali.mat
+          SP = ali_mat
           print('Less Starting points selected')
      }
      return(SP)

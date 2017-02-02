@@ -1,11 +1,11 @@
-#### Matching algorithm with C functions ####
-### Updated : 26/01/2017                  ###
+#### Matching algorithm with C functions #####
+### Updated : 26/01/2017                   ###
+### Check line 187 should be comb2 or comb ###
 
 
-
-match.pair_C = function(data, SP = 10, n.cores = 8, volume = NULL,
-                        jumps = 0, PAM = NULL, gap_open = 0, gap_ext = 0,
-                        restrict = FALSE) {
+ProteinAlign= function(data, SP = 10, n.cores = 8, volume = NULL,
+                     jumps = 0, PAM = NULL, gap_open = 0, gap_ext = 0,
+                     restrict = FALSE) {
      
      if( !is.list(data) ) {
           stop('data must be a list.')
@@ -26,9 +26,9 @@ match.pair_C = function(data, SP = 10, n.cores = 8, volume = NULL,
           }
      }
      if (restrict) {
-          hungarian.step = hungarian.step1
+          HungarianStep = HungarianStep1
      } else {
-          hungarian.step = hungarian.step
+          HungarianStep = HungarianStep
      }
      if (Sys.info()['sysname'] == 'Windows') {
           mclapply = mclapply.win
@@ -37,7 +37,7 @@ match.pair_C = function(data, SP = 10, n.cores = 8, volume = NULL,
      start.time = proc.time()[3]
      
      if (!is.null(PAM)) {
-          PAM = pam.transf(PAM)
+          PAM = PamTransf(PAM)
      }
          
      DATA = list()
@@ -61,19 +61,19 @@ match.pair_C = function(data, SP = 10, n.cores = 8, volume = NULL,
 
      if(is.null(dim(SP))) {
           SPn = SP
-          SP = SPchoose(data[[1]], data[[2]], k = SPn)
+          SP = SpChoose(data[[1]], data[[2]], k = SPn)
           if (is.null(dim(SP)[1])) {
                SP = matrix(0, 2, 2)
           }
           if(dim(SP)[1] < SPn) {
                print('Looking again for Starting Points')
-               SP = SPchoose(data[[1]], data[[2]], k = SPn, cut = 0.1)
+               SP = SpChoose(data[[1]], data[[2]], k = SPn, cut = 0.1)
                if (is.null(dim(SP)[1])) {
                     SP = matrix(0, 2, 2)
                }
                if (dim(SP)[1] < SPn) {
                     print('Looking again for Starting Points')
-                    SP = SPchoose(data[[1]], data[[2]], k = SPn, cut = 0.05)
+                    SP = SpChoose(data[[1]], data[[2]], k = SPn, cut = 0.05)
                }
           }
      }
@@ -85,15 +85,15 @@ match.pair_C = function(data, SP = 10, n.cores = 8, volume = NULL,
      hist = SP[, sm]
      p = dim(hist)[1]
      if(is.null(volume)){
-          vol = max(sapply(DATA, vol.func))
+          vol = max(sapply(DATA, VolFunc))
      } else {
           vol = volume
      }
      ## Starting likelihood
      pop = lapply(M1, seq_len)
-     lik0 = lik.match.gapC(pair = NULL, data = X, seq = seq,
-                           matched = hist, vol = vol,PAM = PAM,
-                           gap_open = gap_open, gap_ext = gap_ext)
+     lik0 = LogLikMatch(pair = NULL, data = X, seq = seq,
+                        matched = hist, vol = vol,PAM = PAM,
+                        gap_open = gap_open, gap_ext = gap_ext)
      rows2 = list()
      for(i in 1:N) {
           rows2[[i]] = which(!pop[[i]] %in% hist[, i])
@@ -121,11 +121,11 @@ match.pair_C = function(data, SP = 10, n.cores = 8, volume = NULL,
      print('Exploring pairs')
 
      if(length(LL) == 1){
-          res = lapply(LL, lik.match.gapC, data = X, seq = seq, matched = hist,
+          res = lapply(LL, LogLikMatch, data = X, seq = seq, matched = hist,
                        vol = vol, PAM = PAM,
                        gap_ext = gap_ext, gap_open = gap_open)
      } else {
-          res = mclapply(LL, lik.match.gapC, mc.cores=cores,
+          res = mclapply(LL, LogLikMatch, mc.cores=cores,
                          data = X, seq = seq, matched = hist, vol = vol,
                          PAM = PAM, gap_ext = gap_ext, gap_open = gap_open)
      }
@@ -133,7 +133,7 @@ match.pair_C = function(data, SP = 10, n.cores = 8, volume = NULL,
      res = as.numeric(unlist(res))
      ### Apply the Hungarian algorithm to obtain an alignment
      print ('Add pairs')
-     hung = hungarian.step(data = X, seq = seq, lik = res, lik0 = lik0,
+     hung = HungarianStep(data = X, seq = seq, lik = res, lik0 = lik0,
                            matched = hist, comb2 = comb2, rows2 = rows2,
                            vol = vol, PAM = PAM, gap_open = gap_open,
                            gap_ext = gap_ext)
@@ -142,27 +142,27 @@ match.pair_C = function(data, SP = 10, n.cores = 8, volume = NULL,
 
      ### REMOVE STEP
      print('Remove pairs')
-     res.remove = remove.step(data = X, seq = seq, matched = hist, vol = vol,
+     res_remove = RemoveStep(data = X, seq = seq, matched = hist, vol = vol,
                               lik0 = lik0, PAM = PAM,gap_open = gap_open,
                               gap_ext = gap_ext)
-     lik0 = res.remove$lik0
-     hist = res.remove$hist
+     lik0 = res_remove$lik0
+     hist = res_remove$hist
      pnew = dim(hist)[1]
 
      # RANDOM JUMP STEP
      if (jumps  != 0 & pnew < min(M1)) {
-          jump.counter = 1
-          while (jump.counter <= jumps) {
-               print(c('Random Jump', jump.counter))
+          jump_counter = 1
+          while (jump_counter <= jumps) {
+               print(c('Random Jump', jump_counter))
                avail = list()
                for (i in 1:N) {
                     avail[[i]] = which(!1:M1[i] %in% hist[, i])
                }
-               random.pair = as.vector(unlist(lapply(avail, sample, 1)))
-               lik0 = lik.match.gapC(pair = random.pair, data = X, seq = seq,
+               random_pair = as.vector(unlist(lapply(avail, sample, 1)))
+               lik0 = LogLikMatch(pair = random_pair, data = X, seq = seq,
                                      matched = hist, vol = vol, PAM = PAM,
                                      gap_open = gap_open, gap_ext = gap_ext)
-               hist = rbind(hist, random.pair)
+               hist = rbind(hist, random_pair)
                rows2 = list()
                for(i in 1:N) {
                     rows2[[i]] = which(!pop[[i]] %in% hist[, i])
@@ -172,11 +172,11 @@ match.pair_C = function(data, SP = 10, n.cores = 8, volume = NULL,
                LL = lapply(seq_len(nrow(comb)), function(i) comb[i, ])
                res = NULL
                if(length(LL) == 1){
-                    res = lapply(LL, lik.match.gapC, data = X, seq=seq,
+                    res = lapply(LL, LogLikMatch, data = X, seq=seq,
                                  matched = hist, vol = vol, PAM = PAM,
                                  gap_ext = gap_ext, gap_open = gap_open)
                } else {
-                    res = mclapply(LL,lik.match.gapC, mc.cores=cores, data = X,
+                    res = mclapply(LL,LogLikMatch, mc.cores=cores, data = X,
                                    seq=seq, matched = hist, vol = vol,
                                    PAM = PAM, gap_ext = gap_ext,
                                    gap_open = gap_open)
@@ -184,20 +184,20 @@ match.pair_C = function(data, SP = 10, n.cores = 8, volume = NULL,
                res = unlist(res)
                res = as.numeric(res)
                print('Add Pairs')
-               hung = hungarian.step(data = X, seq=seq, lik = res, lik0 = lik0,
-                                     matched = hist,comb2=comb2, rows2 = rows2,
+               hung = HungarianStep(data = X, seq=seq, lik = res, lik0 = lik0,
+                                     matched = hist,comb2=comb, rows2 = rows2,
                                      vol = vol, PAM = PAM, gap_open = gap_open,
                                      gap_ext = gap_ext)
                lik0 = hung$lik0
                hist = hung$hist
-               res.remove = remove.step(data = X, seq = seq, matched = hist,
+               res_remove = RemoveStep(data = X, seq = seq, matched = hist,
                                         vol = vol, lik0 = lik0, PAM = PAM,
                                         gap_open = gap_open, gap_ext = gap_ext)
-               lik0 = res.remove$lik0
-               hist = res.remove$hist
+               lik0 = res_remove$lik0
+               hist = res_remove$hist
                pnew = dim(hist)[1]
 
-               jump.counter = jump.counter + 1
+               jump_counter = jump_counter + 1
 
                if (pnew == min(M1)) {
                     break
@@ -214,7 +214,7 @@ match.pair_C = function(data, SP = 10, n.cores = 8, volume = NULL,
 
      rownames(hist) = c()
      names(lik0) = c()
-     metric  = Similarity.metrics(as.matrix(X[[1]]), as.matrix(X[[2]]), hist)
+     metric  = SimilarityMetrics(as.matrix(X[[1]]), as.matrix(X[[2]]), hist)
      end.time = proc.time()[3] - start.time
      names(end.time) = c('seconds')
      out = list()

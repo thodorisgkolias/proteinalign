@@ -1,10 +1,10 @@
 ## rotation integral
-myrotsim.laplaceC = function(l) {
+RotSimLaplaceC = function(l) {
      res = .C("dointeg2", as.double(l), out = as.double(rep(0, 4)))$out
      return(res)
 }
 ## EM 
-EM_C<-function(x){
+EMSizeShape<-function(x){
      # x is an array(k,m,n)
      z = list()
      d = dim(x)
@@ -24,7 +24,7 @@ EM_C<-function(x){
 
 
 
-gpa_C<-function(x,rescale=1,reflect=0,tol1=1e-5,tol2=tol1) {
+GpaC<-function(x,rescale=1,reflect=0,tol1=1e-5,tol2=tol1) {
      #input is the 3 dimensional matrix as in procGPA, tolerances are the same
      #rescale and reflect are obvious if values are 1 then the same as TRUE otherwise FALSE
      
@@ -34,21 +34,18 @@ gpa_C<-function(x,rescale=1,reflect=0,tol1=1e-5,tol2=tol1) {
      k<-d[1]
      n<-d[3]
      x0<-x
-     #x0<-aperm(x,c(2,1,3));
      a<-.C("ctorrgpa",as.double(x0),as.integer(k),as.integer(m),
            as.integer(n),as.integer(rescale),as.integer(reflect),
            as.double(tol1),as.double(tol2),out=x0)$out
-     rm(x0);
-     #z$rot<-aperm(a1,c(2,1,3));
+     rm(x0)
      z$rot<-array(a,c(k,m,n))
-     rm(a);
-     z$mshape<-apply(z$rot,c(1,2),mean);
-     
-     return(z);
+     rm(a)
+     z$mshape<-apply(z$rot,c(1,2),mean)
+     return(z)
 }
 
 
-diam_C<-function(x,preshape=0,reflect=0) {
+DiamC<-function(x,preshape=0,reflect=0) {
      #this produces the sample diameter, 
      #in particular gives the riemdist between two configurations if dim[3]=2
      # x is a 3-d matrix
@@ -61,23 +58,23 @@ diam_C<-function(x,preshape=0,reflect=0) {
      a<-.C("diam",as.double(x),as.integer(k),as.integer(m),as.integer(n),
            as.integer(preshape),as.integer(reflect),out=double(length(1)))$out
      #rm(x0);
-     return(a);
+     return(a)
 }
 
 
 
-riemdist_C<-function(x,y,preshape=0,reflect=0) {
+RiemdistC<-function(x,y,preshape=0,reflect=0) {
      #riemdist between configurations x,y. If preshape=1 x,y are preshapes
      #reflect=1 then refleltion information is removed.
 
      Y<-array(0,c(dim(x)[1],dim(x)[2],2))
      Y[,,1]<-x
      Y[,,2]<-y
-     s<-diam_C(Y,preshape,reflect)
+     s<-DiamC(Y,preshape,reflect)
      s
 }
 
-rgpa_C<-function(x,reflect=0,tol1=1e-10) {
+RgpaC<-function(x,reflect=0,tol1=1e-10) {
      #input is the 3 dimensional matrix as in rgpa, tolerance is the same
      #rescale and reflect are obvious if values are 1 then the same as TRUE otherwise FALSE
      
@@ -101,7 +98,7 @@ rgpa_C<-function(x,reflect=0,tol1=1e-10) {
 }
 
 
-sgpa_C<-function(x) {
+SgpaC<-function(x) {
      #input is the 3 dimensional matrix as in sgpa
 
      d<-dim(x)
@@ -120,7 +117,7 @@ sgpa_C<-function(x) {
      return(z)
 }
 
-preshapetoicon_C<-function(x) {
+PreShapeToIconC<-function(x) {
      #input is the 2 dimensional matrix 
 
      d<-dim(x)
@@ -137,7 +134,7 @@ preshapetoicon_C<-function(x) {
      return(z)
 }
 
-cnt3_C<-function(x) {
+Cnt3C<-function(x) {
      #input is the 3 dimensional matrix as in cnt3
 
      z=list()
@@ -158,7 +155,7 @@ cnt3_C<-function(x) {
 }
 
 
-preshape_C<-function(x,rescale=1) {
+PreShapeC<-function(x,rescale=1) {
      #input is the 2 dimensional matrix 
 
      d<-dim(x)
@@ -178,7 +175,7 @@ preshape_C<-function(x,rescale=1) {
 
 ###
 
-vectorhelmert_C<-function(X){
+VectorHelmertC<-function(X){
      #function produces the matrix of preshapes
      #X is kxmxn output is Y a (k-1)xmxn matrix
 
@@ -186,7 +183,7 @@ vectorhelmert_C<-function(X){
      d[1]<-d[1]-1
      Y<-array(0,d)
      for (i in 1:d[3])
-          Y[,,i]<-preshape_C(X[,,i])
+          Y[,,i]<-PreshapeC(X[,,i])
      Y
 }
 
