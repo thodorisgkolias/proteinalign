@@ -17,6 +17,21 @@ biocLite("msa")
 ```
 
 ### Code example
+Load data 
+```{.r}
+data1 = LoadPDB('2gb1')
+data2 = LoadPDB('1ubq')
+```
+then putting it in a list using
+
+```{.r}
+data = list(data1,data2)
+```
+Finally you can produce an alignment of these two protein molecules using
+
+```{.r}
+ProteinAlign(data, SP = 7, n.cores = 8)
+```
 
 ### Authors
 
