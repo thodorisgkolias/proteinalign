@@ -37,7 +37,7 @@ struct vector *vector_alloc(FILE *fp,int len)
    temp = (struct vector *)calloc(1,sizeof(struct vector));
    if (temp == NULL)
    {
-           printf("Not enough memory to continue");
+           //printf("Not enough memory to continue");
           return(NULL);
    }
 /*
@@ -53,7 +53,7 @@ struct vector *vector_alloc(FILE *fp,int len)
    temp->e = (double *)calloc(temp->nrow,sizeof(double));
    if (temp->e == NULL )
    {
-      printf("Not enough memory to store vector");
+      //printf("Not enough memory to store vector");
           return(NULL);
    }
    for (i=0;i<temp->nrow;i++)
@@ -63,7 +63,7 @@ struct vector *vector_alloc(FILE *fp,int len)
  */
       if (fscanf(fp,"%lf",&(temp->e[i])) != 1)
           {
-         printf("File not of correct format");
+        // printf("File not of correct format");
                  return(NULL);
           }
    }
@@ -80,7 +80,7 @@ struct matrix *matrix_alloc(FILE *fp, int nrow, int ncol)
    temp = (struct matrix *)calloc(1,sizeof(struct matrix));
    if (temp == NULL)
    {
-      printf("Not enough memory to store matrix");
+    //  printf("Not enough memory to store matrix");
           return(NULL);
    }
 /* 
@@ -91,7 +91,7 @@ struct matrix *matrix_alloc(FILE *fp, int nrow, int ncol)
    temp->e = (double **)calloc(temp->nrow,sizeof(double *));
    if (temp->e == NULL )
    {
-      printf("Not enough memory to store matrix");
+     // printf("Not enough memory to store matrix");
           return(NULL);
    }
    for (i=0;i<temp->nrow;i++)
@@ -99,7 +99,7 @@ struct matrix *matrix_alloc(FILE *fp, int nrow, int ncol)
       temp->e[i] = (double *)calloc(temp->ncol,sizeof(double));
       if (temp->e[i]  == NULL )
           {
-         printf("Not enough memory to store matrix");
+        // printf("Not enough memory to store matrix");
                  return(NULL);
           }
    }
@@ -112,7 +112,7 @@ struct matrix *matrix_alloc(FILE *fp, int nrow, int ncol)
  */
          if (fscanf(fp,"%lf",&(temp->e[i][j])) != 1)
                  {
-            printf("File not of correct format");
+           // printf("File not of correct format");
                         return(NULL);
                  }
       }
@@ -131,7 +131,7 @@ struct matrix3d *matrix3d_alloc(FILE *fp, int nrow, int ncol,int nblo)
    temp = (struct matrix3d *)calloc(1,sizeof(struct matrix3d));
    if (temp == NULL)
    {
-      printf("Not enough memory to store matrix");
+    //  printf("Not enough memory to store matrix");
           return(NULL);
    }
 /* 
@@ -143,7 +143,7 @@ struct matrix3d *matrix3d_alloc(FILE *fp, int nrow, int ncol,int nblo)
    temp->e = (double ***)calloc(temp->nrow,sizeof(double **));
    if (temp->e == NULL )
    {
-      printf("Not enough memory to store matrix");
+    //  printf("Not enough memory to store matrix");
           return(NULL);
    }
    for (i=0;i<temp->nrow;i++)
@@ -152,7 +152,7 @@ struct matrix3d *matrix3d_alloc(FILE *fp, int nrow, int ncol,int nblo)
       temp->e[i] = (double **)calloc(temp->ncol,sizeof(double *));
       if (temp->e[i]  == NULL )
           {
-         printf("Not enough memory to store matrix");
+      //   printf("Not enough memory to store matrix");
                  return(NULL);
           }
           
@@ -161,7 +161,7 @@ struct matrix3d *matrix3d_alloc(FILE *fp, int nrow, int ncol,int nblo)
       temp->e[i][j] = (double *)calloc(temp->nblo,sizeof(double ));
       if (temp->e[i][j]  == NULL )
           {
-         printf("Not enough memory to store matrix");
+     //    printf("Not enough memory to store matrix");
                  return(NULL);
           }
           }
@@ -179,7 +179,7 @@ struct matrix3d *matrix3d_alloc(FILE *fp, int nrow, int ncol,int nblo)
  */
          if (fscanf(fp,"%lf",&(temp->e[i][j][k])) != 1)
                  {
-            printf("File not of correct format");
+       //     printf("File not of correct format");
                         return(NULL);
                  }
       }
@@ -202,7 +202,7 @@ struct matrix *get_matrix(struct matrix3d *mat3d,int nbl)
    temp = (struct matrix *)calloc(1,sizeof(struct matrix));
    if (temp == NULL)
    {
-           printf("MCMC Error 0026 : Not enough memory to continue");
+       //    printf("MCMC Error 0026 : Not enough memory to continue");
           return(NULL);
    }
    temp->nrow = mat3d->nrow;
@@ -210,7 +210,7 @@ struct matrix *get_matrix(struct matrix3d *mat3d,int nbl)
    temp->e = (double **)calloc(temp->nrow,sizeof(double *));
    if (temp->e == NULL )
    {
-           printf("MCMC Error 0027 : Not enough memory to continue");
+        //   printf("MCMC Error 0027 : Not enough memory to continue");
           return(NULL);
    }
    for (i=0;i<temp->nrow;i++)
@@ -218,7 +218,7 @@ struct matrix *get_matrix(struct matrix3d *mat3d,int nbl)
       temp->e[i] = (double *)calloc(temp->ncol,sizeof(double));
       if (temp->e[i]  == NULL )
           {
-                  printf("MCMC Error 0028 : Not enough memory to continue");
+            //      printf("MCMC Error 0028 : Not enough memory to continue");
                  return(NULL);
           }
    }
@@ -307,62 +307,11 @@ void matrix3d_free(struct matrix3d *mat)
 }
 
 
-void vector_print(struct vector *vec)
-{
-   int i;            
-   printf("\n");
-   for (i=0;i<vec->nrow;i++)
-   {
-     
-         printf(" %lf",vec->e[i]);
-   
-      printf("\n");
-   }
-}
 
 
 
-void matrix_print(struct matrix *mat)
-{
-   int i,j;            
-   printf("\n");
-   for (i=0;i<mat->nrow;i++)
-   {
-      for (j=0;j<mat->ncol;j++)
-      {
-         printf(" %2.8lf",mat->e[i][j]);
-      }
-      printf("\n");
-   }
-}
-
-/*
- * Function prints out a matrix to stdout from a 3d matrix
- * NOT USED IN OUR CODE!!! - but debug tool!
- */
-void matrix3d_blockprint(struct matrix3d *mat, int nbl)
-{
-int i,j;
-float u;
-/*matrix_print(get_matrix(mat,nbl));*/
- printf("\n");
-      for (i=0;i<mat->nrow;i++)
-   {
-      for (j=0;j<mat->ncol;j++)
-      {
-      u=mat->e[i][j][nbl];
-         printf(" %f",u);
-      }
-      printf("\n");
-   }
-
-}
 
 
-/*
- * Function prints out a matrix to stdout
- * NOT USED IN OUR CODE!!! - but debug tool!
- */
 
 /*
  * Function frees memory in a matrix
@@ -461,14 +410,14 @@ struct vector *vector_blank(int nrow)
    temp = (struct vector *)calloc(1,sizeof(struct vector));
    if (temp == NULL)
    {
-           printf("MCMC Error 0024 : Not enough memory to continue");
+        //   printf("MCMC Error 0024 : Not enough memory to continue");
           return(NULL);
    }
    temp->nrow = nrow;
    temp->e = (double *)calloc(temp->nrow,sizeof(double));
    if (temp->e == NULL )
    {
-           printf("MCMC Error 0025 : Not enough memory to continue");
+        //   printf("MCMC Error 0025 : Not enough memory to continue");
           return(NULL);
    }
    for (i=0;i<temp->nrow;i++)
@@ -511,7 +460,7 @@ struct matrix *matrix_blank(int nrow,int ncol)
    temp = (struct matrix *)calloc(1,sizeof(struct matrix));
    if (temp == NULL)
    {
-           printf("MCMC Error 0026 : Not enough memory to continue");
+        //   printf("MCMC Error 0026 : Not enough memory to continue");
           return(NULL);
    }
    temp->nrow = nrow;
@@ -519,7 +468,7 @@ struct matrix *matrix_blank(int nrow,int ncol)
    temp->e = (double **)calloc(temp->nrow,sizeof(double *));
    if (temp->e == NULL )
    {
-           printf("MCMC Error 0027 : Not enough memory to continue");
+        //   printf("MCMC Error 0027 : Not enough memory to continue");
           return(NULL);
    }
    for (i=0;i<temp->nrow;i++)
@@ -527,7 +476,7 @@ struct matrix *matrix_blank(int nrow,int ncol)
       temp->e[i] = (double *)calloc(temp->ncol,sizeof(double));
       if (temp->e[i]  == NULL )
           {
-                  printf("MCMC Error 0028 : Not enough memory to continue");
+            //      printf("MCMC Error 0028 : Not enough memory to continue");
                  return(NULL);
           }
    }
@@ -557,7 +506,7 @@ struct matrix3d *matrix3d_blank(int nrow, int ncol,int nblo)
    temp = (struct matrix3d *)calloc(1,sizeof(struct matrix3d));
    if (temp == NULL)
    {
-      printf("Not enough memory to store matrix");
+   //   printf("Not enough memory to store matrix");
           return(NULL);
    }
 /* 
@@ -569,7 +518,7 @@ struct matrix3d *matrix3d_blank(int nrow, int ncol,int nblo)
    temp->e = (double ***)calloc(temp->nrow,sizeof(double **));
    if (temp->e == NULL )
    {
-      printf("Not enough memory to store matrix");
+     // printf("Not enough memory to store matrix");
           return(NULL);
    }
    for (i=0;i<temp->nrow;i++)
@@ -578,7 +527,7 @@ struct matrix3d *matrix3d_blank(int nrow, int ncol,int nblo)
       temp->e[i] = (double **)calloc(temp->ncol,sizeof(double *));
       if (temp->e[i]  == NULL )
           {
-         printf("Not enough memory to store matrix");
+      //   printf("Not enough memory to store matrix");
                  return(NULL);
           }
           
@@ -587,7 +536,7 @@ struct matrix3d *matrix3d_blank(int nrow, int ncol,int nblo)
       temp->e[i][j] = (double *)calloc(temp->nblo,sizeof(double ));
       if (temp->e[i][j]  == NULL )
           {
-         printf("Not enough memory to store matrix");
+      //   printf("Not enough memory to store matrix");
                  return(NULL);
           }
           }
@@ -682,12 +631,12 @@ struct matrix *matrix_add(struct matrix *mat1, struct matrix *mat2)
    struct matrix *temp;
    if (mat1->ncol != mat2->ncol)
    {
-           printf("MCMC Error 0029 : Wrong parameters for matrix_add routine");
+        //   printf("MCMC Error 0029 : Wrong parameters for matrix_add routine");
           return(NULL);
    }
    if (mat1->nrow != mat2->nrow)
    {
-           printf("MCMC Error 0030 : Wrong parameters for matrix_add routine");
+        //   printf("MCMC Error 0030 : Wrong parameters for matrix_add routine");
           return(NULL);
    }
    temp = matrix_copy(mat1);
@@ -716,12 +665,12 @@ struct matrix *matrix_sub(struct matrix *mat1, struct matrix *mat2)
    struct matrix *temp;
    if (mat1->ncol != mat2->ncol)
    {
-           printf("MCMC Error 0031 : Wrong parameters for matrix_sub routine");
+        //   printf("MCMC Error 0031 : Wrong parameters for matrix_sub routine");
           return(NULL);
    }
    if (mat1->nrow != mat2->nrow)
    {
-           printf("MCMC Error 0032 : Wrong parameters for matrix_sub routine");
+        //   printf("MCMC Error 0032 : Wrong parameters for matrix_sub routine");
           return(NULL);
    }
    temp = matrix_copy(mat1);
@@ -749,11 +698,11 @@ void matrix_sub_inplace(struct matrix *mat1, struct matrix *mat2)
    int i,j;
    if (mat1->ncol != mat2->ncol)
    {
-           printf("MCMC Error 0031 : Wrong parameters for matrix_sub routine");
+       //    printf("MCMC Error 0031 : Wrong parameters for matrix_sub routine");
    }
    if (mat1->nrow != mat2->nrow)
    {
-           printf("MCMC Error 0032 : Wrong parameters for matrix_sub routine");
+        //   printf("MCMC Error 0032 : Wrong parameters for matrix_sub routine");
    }
 
    for (i=0;i<mat1->nrow;i++)
@@ -781,7 +730,7 @@ struct matrix *matrix_mult(struct matrix *mat1, struct matrix *mat2)
    struct matrix *temp;
    if (mat1->ncol != mat2->nrow)
    {
-           printf("MCMC Error 0033 : Wrong parameters for matrix_mult routine");
+       //    printf("MCMC Error 0033 : Wrong parameters for matrix_mult routine");
           return(NULL);
    }
    temp = matrix_blank(mat1->nrow,mat2->ncol);
@@ -1076,7 +1025,7 @@ struct matrix *matrix_tranp_mult(struct matrix *mat1, struct matrix *mat2)
    struct matrix *temp;
    if (mat1->ncol != mat2->ncol)
    {
-           printf("MCMC Error 0033 : Wrong parameters for matrix_mult routine");
+        //   printf("MCMC Error 0033 : Wrong parameters for matrix_mult routine");
           return(NULL);
    }
    temp = matrix_blank(mat1->ncol,mat1->ncol);
@@ -1144,27 +1093,4 @@ struct matrix *scale(struct matrix *mat1, int mean, int scale)
 
 
 
-void save_matrix3d(FILE *fp,struct matrix3d *temp)
-
-/* Function saves a 3d matrix nrow X nclo X nblo to teh data file with pointer fp */
-
-{
-   int i,j,k;
-   
-   for (k=0;k<temp->nblo;k++)
-{
-   for (j=0;j<temp->ncol;j++)
-   {
-      for (i=0;i<temp->nrow;i++)
-      {
-/*
- * Read elements of matrix along the columns
- */
-         fprintf(fp,"%lf\n",temp->e[i][j][k]);
-        /* fprintf(fp,"%lf\n",temp->e[i][j][k]);*/                     
-       }
-   }
-}   
-   
-}
 

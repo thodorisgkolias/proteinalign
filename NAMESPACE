@@ -19,8 +19,10 @@ export(LogLikSizeShape,
        SpChoose
 )
 
-importFrom(parallel, "mclapply")
+import(parallel)
 importFrom(clue,"solve_LSAP")
+importFrom("methods", "slot")
+importFrom("stats", "dist")
 import(Biostrings)
 import(msa)
 

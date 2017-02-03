@@ -898,7 +898,7 @@ __END_DECLS
                                         (*gsl_stream_handler) (label, file, line, reason);
                                         return;
                                    }
-                                   fprintf (gsl_stream, "gsl: %s:%d: %s: %s\n", file, line, label, reason);
+                                 //  fprintf (gsl_stream, "gsl: %s:%d: %s: %s\n", file, line, label, reason);
                                    
                               }
                          

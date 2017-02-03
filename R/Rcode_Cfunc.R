@@ -183,7 +183,7 @@ VectorHelmertC<-function(X){
      d[1]<-d[1]-1
      Y<-array(0,d)
      for (i in 1:d[3])
-          Y[,,i]<-PreshapeC(X[,,i])
+          Y[,,i]<-PreShapeC(X[,,i])
      Y
 }
 
