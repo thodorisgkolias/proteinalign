@@ -69,7 +69,7 @@ LoadPDB = function(pdb, atom = 'CA', chain = 'A') {
 
 
 
-ReadPDB = function(dir){ 
+ReadPDB = function(dir, atom = 'CA'){ 
      ## Read pdb format data from a directory
      
      ind1 = c(1, 7, 13, 17, 18, 22, 23, 27, 31, 39, 47, 55, 61, 73, 77, 79)
@@ -89,7 +89,9 @@ ReadPDB = function(dir){
      out[, 6] = as.numeric(levels(out[, 6]))[out[, 6]]
      out[, 7] = as.numeric(levels(out[, 7]))[out[, 7]]
      out[, 8] = as.numeric(levels(out[, 8]))[out[, 8]]
-     out = AminoTransf(out[out[, 3] == 'CA',c(4, 6, 7, 8)])
+     out = out[out[, 3] == atom,c(4, 6, 7, 8)]
+     colnames(out) = c('amino', 'x', 'y', 'z')
+     out = AminoTransf(out)
      return(out)
 }
 
