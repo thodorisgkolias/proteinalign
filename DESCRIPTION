@@ -7,12 +7,12 @@ Maintainer: Theodoros Gkolias <tg235@kent.ac.uk>
 Description: More about what it does (maybe more than one line)
 Depends:
     R (>= 3.1.0),
-    Biostrings (>= 2.30.0)
+    
 Imports:
+    Biostrings,
     msa,
     clue,
     parallel,
     methods
 License: GPL-2
 LazyData: TRUE
-RoxygenNote: 5.0.1.9000
