@@ -7,14 +7,22 @@
 ### Installation
 The package can be install from the github repository using 
 ```{.r}
+install.packages('devtools')
 devtools::install_github('thodorisgkolias/shapealign')
 ```
+
 The packages of 'Biostrings' and 'msa' can be installed using
 ```{.r}
 source("https://bioconductor.org/biocLite.R")
 biocLite("Biostrings")
 biocLite("msa")
 ```
+then it can be loaded in R as usually with
+```{.r}
+library(shapealign)
+```
+
+
 
 ### Code example
 Load data 
