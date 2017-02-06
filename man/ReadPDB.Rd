@@ -21,7 +21,7 @@ ReadPDB(dir, atom = 'CA')
 \examples{
 \dontrun{
 ## Specify the local directory of a .pdb or .atm file
-file_dir = '1a87.pdb'
+file_dir <- '1a87.pdb'
 ReadPDB(dir = file_dir)
 }
 }

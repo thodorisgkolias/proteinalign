@@ -18,6 +18,6 @@
 
 \author{Alfred Kume}
 \examples{
-x = rnorm(15,5,3)
+x <- rnorm(15,5,3)
 Norm(x)
 }

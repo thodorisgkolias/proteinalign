@@ -22,6 +22,6 @@
 
 \author{Alfred Kume}
 \examples{
-     x = matrix(rnorm(15,5,3))
+     x <- matrix(rnorm(15,5,3))
      Norm(t(x) \%*\% x)
 }

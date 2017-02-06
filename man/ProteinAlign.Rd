@@ -35,15 +35,15 @@ ProteinAlign(data, SP = 10, n.cores = 8, volume = NULL,
 \author{Thodoris Gkolias}
 \examples{
 ## Loading data from the RCSB protein data bank
-data1 = LoadPDB('2gb1')
-data2 = LoadPDB('1ubq')
-data = list(data1,data2)
+data1 <- LoadPDB('2gb1')
+data2 <- LoadPDB('1ubq')
+data <- list(data1,data2)
 
 ##  Alignment using 5 automatic selected landmarks 
-ali1 = ProteinAlign(data, SP = 5, n.cores = 2)
+ali1 <- ProteinAlign(data, SP = 5, n.cores = 2)
 
 ## Alignment using user specified starting points and PAM matrix
-SP_user = cbind(c(2,3,4,5,16,18,22,50), c(2,3,4,5,13,15,19,65))
-PAM120 = PAM[[120]]
-ali2 = ProteinAlign(data, SP = SP_user, n.cores = 2, PAM = PAM120)
+SP_user <- cbind(c(2,3,4,5,16,18,22,50), c(2,3,4,5,13,15,19,65))
+PAM120 <- PAM[[120]]
+ali2 <- ProteinAlign(data, SP = SP_user, n.cores = 2, PAM = PAM120)
 }

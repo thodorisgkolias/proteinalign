@@ -21,8 +21,8 @@
 \author{Thodoris Gkolias}
 \examples{
      ## Amino acid sequences
-     aa1 = c('A','A','V','G','M','K','N','N')
-     aa2 = c('A','P','G','G','N','P','D','E','E','Q')
+     aa1 <- c('A','A','V','G','M','K','N','N')
+     aa2 <- c('A','P','G','G','N','P','D','E','E','Q')
      
      PAMLogLik(seq1 = aa1, seq2 = aa2, p = 5, PAM = PAM[[70]])
      

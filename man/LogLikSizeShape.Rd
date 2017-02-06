@@ -22,8 +22,8 @@ LogLikSizeShape(X, mu, sigma, p, M, A)
   
 \author{Thodoris Gkolias}
 \examples{
-x = matrix(rnorm(30), 3, 10)
-meanmat = matrix(rnorm(30,2,1), 3, 10)
+x <- matrix(rnorm(30), 3, 10)
+meanmat <- matrix(rnorm(30,2,1), 3, 10)
 
 LogLikSizeShape(X = x, mu = meanmat, sigma = 1, p = 5, M = 10, A = 1000)
 }
