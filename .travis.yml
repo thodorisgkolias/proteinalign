@@ -16,8 +16,6 @@ before_install:
 
 install:
  - ./run.sh install_aptget r-cran-clue
- - ./run.sh install_aptget r-cran-parallel
- - ./run.sh install_aptget r-cran-methods
  - ./run.sh install_aptget r-cran-Biostrings
  - ./run.sh install_aptget r-cran-msa
 
