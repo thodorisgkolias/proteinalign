@@ -16,8 +16,8 @@ before_install:
 
 install:
  - ./run.sh install_aptget r-cran-clue
- - ./run.sh install_aptget r-cran-Biostrings
- - ./run.sh install_aptget r-cran-msa
+ - ./run.sh bioc_install Biostrings
+ - ./run.sh bioc_install msa
 
 after_failure:
  - ./run.sh dump_logs
