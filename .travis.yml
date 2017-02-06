@@ -1,5 +1,36 @@
-# R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
+# Run Travis CI for R using https://eddelbuettel.github.io/r-travis/
 
-language: R
-sudo: false
-cache: packages
+language: c
+
+sudo: required
+
+dist: trusty
+
+env:
+  global:
+    - RunFOAASTests=yes
+
+before_install:
+  - curl -OLs http://eddelbuettel.github.io/r-travis/run.sh && chmod 0755 run.sh
+  - ./run.sh bootstrap
+
+install:
+  - ./run.sh install_aptget r-cran-clue
+  - ./run.sh install_aptget r-cran-parallel
+  - ./run.sh install_aptget r-cran-methods
+  - ./run.sh install_aptget r-cran-Biostrings
+    - ./run.sh install_aptget r-cran-msa
+
+
+
+  
+  
+  
+  
+  after_failure:
+  - ./run.sh dump_logs
+
+notifications:
+  email:
+    on_success: change
+    on_failure: change
