@@ -2,7 +2,10 @@
 
 language: R
 install:
- - ./travis-tool.sh install_bioc msa
- 
+  ## For installing all CRAN dependencies using rpack's DESCRIPTION
+  - ./travis-tool.sh install_deps
+  
+  ## For installing all Bioconductor dependencies using rpack's DESCRIPTION
+  - ./travis-tool.sh install_bioc_deps
 sudo: false
 cache: packages
