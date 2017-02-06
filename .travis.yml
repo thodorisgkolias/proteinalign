@@ -21,14 +21,8 @@ install:
  - ./run.sh install_aptget r-cran-Biostrings
  - ./run.sh install_aptget r-cran-msa
 
-
-
-  
-  
-  
-  
-  after_failure:
-  - ./run.sh dump_logs
+after_failure:
+ - ./run.sh dump_logs
 
 notifications:
   email:
