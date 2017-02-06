@@ -2,7 +2,7 @@
 
 language: R
 install:
- - ./travis-tool.sh install_bioc
+ - ./travis-tool.sh install_bioc msa
  
 sudo: false
 cache: packages
