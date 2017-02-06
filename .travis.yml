@@ -2,8 +2,8 @@
 
 language: R
 install:
-  - ./travis-tool.sh install_bioc Biostrings
-   - ./travis-tool.sh install_bioc msa
+  - travis-tool.sh install_bioc Biostrings
+  -travis-tool.sh install_bioc msa
 
 
 sudo: false
