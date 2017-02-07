@@ -1,9 +1,7 @@
-# DOCUMENTATION
- - documentation for each function and data set.
-
 # DATASETS
  - dataset for the EM/Procustes.
 
 # Code
  - add functions to extract data in .pdb format and plot protein shapes. 
+ - add function for database search.
  
