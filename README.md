@@ -1,4 +1,4 @@
-## shapealign
+## shapealign [![Build Status](https://travis-ci.org/thodorisgkolias/shapealign.svg?branch=master)](https://travis-ci.org/thodorisgkolias/shapealign)[![License](http://img.shields.io/badge/license-GPL%20%28%3E=%202%29-brightgreen.svg?style=flat)](http://www.gnu.org/licenses/gpl-2.0.html)
 
 ### Documentation
 
@@ -44,5 +44,5 @@ ProteinAlign(data, SP = 7, n.cores = 8)
 ### Authors
 
 ### License
-GPL-2
+GPL(>=2)
 

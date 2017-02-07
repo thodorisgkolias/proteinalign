@@ -13,6 +13,7 @@ before_install:
 install:
   - ./run.sh install_aptget r-cran-clue
   - ./run.sh bioc_install Biostrings
+  - ./run.sh bioc_install msa
 
 script:
   - ./run.sh run_tests
