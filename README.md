@@ -5,23 +5,24 @@
 'shapealign' is a R package that performs protein alignment using statistical shape analysis techiniques.
 
 ### Installation
-The package can be install from the github repository using 
-```{.r}
-install.packages('devtools')
-devtools::install_github('thodorisgkolias/shapealign')
-```
 
-The packages of 'Biostrings' and 'msa' can be installed using
+'shapealign' depends on the Bioconductor packages of 'Biostrings' and 'msa' which can be installed using
 ```{.r}
 source("https://bioconductor.org/biocLite.R")
 biocLite("Biostrings")
 biocLite("msa")
 ```
-then it can be loaded in R as usually with
+
+Next, 'shapealign' can be installed from the github repository using 
+```{.r}
+install.packages('devtools')
+devtools::install_github('thodorisgkolias/shapealign')
+```
+
+and it can be loaded in R as usually with
 ```{.r}
 library(shapealign)
 ```
-
 
 
 ### Code example
