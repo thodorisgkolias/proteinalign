@@ -44,5 +44,5 @@ ProteinAlign(data, SP = 7, n.cores = 8)
 ### Authors
 
 ### License
-GPL(>=2)
+GPL (>=2)
 
