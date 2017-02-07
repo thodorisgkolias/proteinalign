@@ -10,5 +10,5 @@ Imports:
     clue,
     parallel,
     methods
-License: GPL-2
+License: GPL (>=2)
 LazyData: TRUE
