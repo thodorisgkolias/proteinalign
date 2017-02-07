@@ -20,6 +20,6 @@
 
 \author{Thodoris Gkolias}
 \examples{
-    mclapply.win(1:4, function(xx){ Sys.sleep(3) }, mc.cores = 2 )
+    mclapply.win(1:4, function(xx){ Sys.sleep(2) }, mc.cores = 2 )
      
 }
