@@ -6,7 +6,7 @@
 
 ### Installation
 
-'shapealign' depends on the Bioconductor packages of 'Biostrings' and 'msa' which can be installed using
+'shapealign' depends on the Bioconductor's packages of 'Biostrings' and 'msa' which can be installed using
 ```{.r}
 source('https://bioconductor.org/biocLite.R')
 biocLite('Biostrings')
