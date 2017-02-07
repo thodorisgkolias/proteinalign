@@ -3,7 +3,7 @@ language: r
 sudo: false
 
 
-apt_packages:
+r_binary_packages:
  -clue
 bioc_packages:
  -Biostrings
