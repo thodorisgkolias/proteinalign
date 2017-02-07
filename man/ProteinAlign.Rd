@@ -15,11 +15,11 @@ ProteinAlign(data, SP = 10, n.cores = 8, volume = NULL,
 \item{data}{A list of length at least 2 in the format created by LoadPDB or ReadPDB.}
 \item{SP}{Number or matrix, if a number automatic selection of starting points, else a matrix p x n with p>4.}
 \item{n.cores}{The number of cores to be used for parallel computing.}
-\item{volume}{If volume = NULL the volume is calculated from the data.}
+\item{volume}{If NULL the volume is calculated from the data.}
 \item{jumps}{Number of random matching jumps to be performed, if jumps = 0 algorithm runs without random jumps.}
-\item{PAM}{PAM matrix to be used for sequence structure matching, if PAM = NULL no PAM matrix is used.}
-\item{gap_open}{Gap opening penalty, if gap_open = 0 no gap opening penalty is used.}
-\item{gap_ext}{Gap extension penalty, if gap_ext = 0 no gap extension penalty is used.}
+\item{PAM}{PAM matrix to be used for sequence structure matching, if NULL no PAM matrix is used.}
+\item{gap_open}{Gap opening penalty, if 0 no gap opening penalty is used.}
+\item{gap_ext}{Gap extension penalty, if 0 no gap extension penalty is used.}
 \item{restrict}{If TRUE then search for optimal matching happens only on pairs that preserve sequence order.}
 }
 
