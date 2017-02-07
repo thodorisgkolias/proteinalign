@@ -1,4 +1,4 @@
-## shapealign
+## shapealign [![Build Status](https://travis-ci.org/thodorisgkolias/shapealign.svg?branch=master)](https://travis-ci.org/thodorisgkolias/shapealign)
 
 ### Documentation
 
