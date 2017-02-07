@@ -8,9 +8,9 @@
 
 'shapealign' depends on the Bioconductor packages of 'Biostrings' and 'msa' which can be installed using
 ```{.r}
-source("https://bioconductor.org/biocLite.R")
-biocLite("Biostrings")
-biocLite("msa")
+source('https://bioconductor.org/biocLite.R')
+biocLite('Biostrings')
+biocLite('msa')
 ```
 
 Next, 'shapealign' can be installed from the github repository using 
@@ -28,13 +28,13 @@ library(shapealign)
 ### Code example
 Load data 
 ```{.r}
-data1 = LoadPDB('2gb1')
-data2 = LoadPDB('1ubq')
+data1 <- LoadPDB('2gb1')
+data2 <- LoadPDB('1ubq')
 ```
 then putting it in a list using
 
 ```{.r}
-data = list(data1,data2)
+data <- list(data1,data2)
 ```
 Finally you can produce an alignment of these two protein molecules using
 
