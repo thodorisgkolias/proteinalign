@@ -1,28 +1,11 @@
-# Run Travis CI for R using https://eddelbuettel.github.io/r-travis/
 
-language: c
+language: r
+sudo: false
 
-sudo: required
 
-dist: trusty
-
-env:
-  global:
-    - RunFOAASTests=yes
-
-before_install:
-  - curl -OLs http://eddelbuettel.github.io/r-travis/run.sh && chmod 0755 run.sh
-  - ./run.sh bootstrap
-
-install:
- - ./run.sh install_aptget r-cran-clue
- - ./run.sh bioc_install Biostrings
- - ./run.sh bioc_install msa
-
-after_failure:
- - ./run.sh dump_logs
-
-notifications:
-  email:
-    on_success: change
-    on_failure: change
+r_packages:
+ -clue
+bioc_packages:
+ -Biostrings
+ -msa
+cache: packages
