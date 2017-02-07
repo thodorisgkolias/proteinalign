@@ -22,7 +22,7 @@
 
 \author{Thodoris Gkolias}
 \examples{
-     ## Loading data from the RCSB protein data bank
-     LoadPDB('1acx')
-     LoadPDB('1cob', chain = 'B')
+     ## Create data
+     data <- array(rnorm(20*3*5,mean = 2, sd = 1), dim = c(20,3,5))
+     EMSizeShape(data)
 }
