@@ -23,4 +23,4 @@ importFrom("stats", "dist")
 import(Biostrings)
 import(msa)
 
-useDynLib(shapealign)
+useDynLib(proteinalign)
