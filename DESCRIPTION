@@ -1,10 +1,10 @@
-Package: shapealign
+Package: proteinalign
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Structural alignment of protein molecules
 Version: 0.1.0
 Author: Theodoros Gkolias, Alfred Kume
 Maintainer: Theodoros Gkolias <tg235@kent.ac.uk>
-Description: The 'shapealign' package provides functions for structural alignment of protein molecules using statistical shape analyis techiniques.
+Description: The 'proteinalign' package provides functions for structural alignment of protein molecules using statistical shape analyis techiniques.
 Depends: R (>= 3.1.0), Biostrings, msa
 Imports:
     clue,
