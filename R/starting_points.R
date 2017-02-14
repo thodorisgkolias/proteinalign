@@ -39,12 +39,8 @@ SpChoose <- function(data1, data2, k = 4, cut = 0.2) {
     data_proc[, , 1] <- as.matrix(data1[ali_mat[, 1], -1])
     data_proc[, , 2] <- as.matrix(data2[ali_mat[, 2], -1])
     proc <- GpaC(data_proc)
-    euc_dist <- NULL
-    for (i in 1:dim(ali_mat)[1]) {
-      euc_dist[i] <- dist(rbind(proc$rot[i, , 1], proc$rot[i, , 2]))
-    }
-    TM <- 1/(1 + (euc_dist^2)/(d0^2))
-    # m = median(TM) std = sd(TM) cut = m+sig*std
+    di <- apply(proc$rot[,,1] - proc$rot[,,2], 1, Norm)
+    TM <- 1/(1 + (di^2)/(d0^2))
     rows <- which(TM < cut)
     if (length(rows) == 0) {
       break
