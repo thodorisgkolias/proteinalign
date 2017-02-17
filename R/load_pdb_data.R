@@ -50,9 +50,6 @@ LoadPDB <- function(pdb, atom = "CA", chain = "A") {
   }
   newmat <- matrix(unlist(newd), ncol = 12, byrow = TRUE)
   newmat <- newmat[newmat[, 3] == atom, ]
-  if (newmat[1, 5] != "A") {
-    chain <- newmat[1, 5]
-  }
   newmat <- newmat[newmat[, 5] == chain, ]
   colnames(newmat) <- c("type", "seq", "residue", "amino", "chain", "res_no", "x", 
     "y", "z", "occup", "temp", "elem_name")
