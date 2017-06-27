@@ -36,7 +36,7 @@ LoadPDB <- function(pdb, atom = "CA", chain = "A") {
   }
   ind1 <- c(1, 7, 13, 17, 18, 22, 23, 27, 31, 39, 47, 55, 61, 73, 77, 79)
   ind2 <- c(6, 11, 16, 17, 21, 22, 26, 27, 38, 46, 54, 60, 66, 76, 78, 80)
-  file <- paste("http://www.rcsb.org/pdb/files/", pdb, ".pdb", sep = "")
+  file <- paste("https://www.rcsb.org/pdb/files/", pdb, ".pdb", sep = "")
   data1 <- readLines(file, n = -1)
   choose <- substring(data1, 1, 6)
   atoms <- data1[choose == "ATOM  "]
