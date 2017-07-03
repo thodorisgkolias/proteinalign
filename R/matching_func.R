@@ -132,6 +132,7 @@ HungarianStep <- function(data, seq, lik, lik0, matched, rows2, vol, PAM,
 RemoveStep <- function(data, seq, matched, vol, lik0, PAM, gap_open, gap_ext) {
   remove <- TRUE
   hist <- matched
+  cond <- FALSE
   while (remove) {
     lik_remove <- NULL
     for (i in 1:dim(hist)[1]) {
@@ -148,6 +149,7 @@ RemoveStep <- function(data, seq, matched, vol, lik0, PAM, gap_open, gap_ext) {
       hist <- hist[-pos_remove, ]
       pnew <- dim(hist)[1]
       remove <- TRUE
+      cond <- TRUE
     } else {
       print("No more to remove")
       remove <- FALSE
@@ -155,7 +157,7 @@ RemoveStep <- function(data, seq, matched, vol, lik0, PAM, gap_open, gap_ext) {
     }
   }
   
-  return(list(lik0 = lik0, hist = hist))
+  return(list(lik0 = lik0, hist = hist, cond = cond))
 }
 
 
